@@ -4,6 +4,10 @@ import java.util.HashMap;
 
 import de.spacpotato.sagittarius.network.protocol.Packet;
 import de.spacpotato.sagittarius.network.protocol.State;
+import de.spacpotato.sagittarius.network.protocol.handshake.ClientHandshakePacket;
+import de.spacpotato.sagittarius.network.protocol.login.ClientLoginStartPacket;
+import de.spacpotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
+import de.spacpotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
 
 public class PacketRegistry {
 
@@ -18,7 +22,12 @@ public class PacketRegistry {
 		
 		// Register the actual packets.
 		// Only serverbound packets require registration.
+		registerPacket(State.HANDSHAKE, new ClientHandshakePacket());
 		
+		registerPacket(State.STATUS, new ClientStatusRequestPacket());
+		registerPacket(State.STATUS, new ClientStatusPingPacket());
+
+		registerPacket(State.LOGIN, new ClientLoginStartPacket());
 	}
 	
 	private static void registerPacket(State state, Packet packet) {

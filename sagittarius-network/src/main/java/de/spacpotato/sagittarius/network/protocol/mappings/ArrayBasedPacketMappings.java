@@ -22,7 +22,6 @@ public class ArrayBasedPacketMappings implements PacketMappings {
 	@Override
 	public void registerPacket(Packet packet) {
 		packets[packet.getId()] = packet;
-		System.out.println("Registered " + packet.getId());
 	}
 
 }
