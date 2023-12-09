@@ -27,7 +27,7 @@ public class SagittariusImpl extends Sagittarius {
 
 	@Override
 	public Scheduler getScheduler() {
-		return null;
+		return scheduler;
 	}
 	
 	// ============================================================ \\
