@@ -11,7 +11,7 @@ public abstract class Sagittarius {
 	}
 	
 	public static void setInstance(Sagittarius instance) {
-		if (instance != null) throw new RuntimeException("Instance is already set!");
+		if (Sagittarius.instance != null) throw new RuntimeException("Instance is already set!");
 		Sagittarius.instance = instance;
 	}
 	
