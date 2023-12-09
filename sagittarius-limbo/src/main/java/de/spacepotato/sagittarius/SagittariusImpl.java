@@ -1,19 +1,23 @@
 package de.spacepotato.sagittarius;
 
+import de.spacepotato.sagittarius.network.handler.LimboParentHandler;
 import de.spacepotato.sagittarius.scheduler.SagittariusScheduler;
 import de.spacepotato.sagittarius.scheduler.Scheduler;
+import de.spacpotato.sagittarius.network.SagittariusServerImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class SagittariusImpl extends Sagittarius {
 
 	private final SagittariusScheduler scheduler;
+	private final SagittariusServerImpl server;
 	
 	public SagittariusImpl() {
 		setInstance(this);
 		
 		// Initialize variables
 		scheduler = new SagittariusScheduler();
+		server = new SagittariusServerImpl(new LimboParentHandler());
 		
 		// Start the actual server
 		load();
@@ -52,7 +56,8 @@ public class SagittariusImpl extends Sagittarius {
 	
 	private void load() {
 		log.info("Starting " + getName() + " v." + getVersion() + "...");
-		
+		server.setHostAndPort("127.0.0.1", 25564);
+		server.start();
 		
 		scheduler.startProcessing();
 	}
