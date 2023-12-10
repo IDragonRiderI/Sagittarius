@@ -1,9 +1,9 @@
 package de.spacepotato.sagittarius;
 
+import de.spacepotato.sagittarius.network.SagittariusServerImpl;
 import de.spacepotato.sagittarius.network.handler.LimboParentHandler;
 import de.spacepotato.sagittarius.scheduler.SagittariusScheduler;
 import de.spacepotato.sagittarius.scheduler.Scheduler;
-import de.spacpotato.sagittarius.network.SagittariusServerImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

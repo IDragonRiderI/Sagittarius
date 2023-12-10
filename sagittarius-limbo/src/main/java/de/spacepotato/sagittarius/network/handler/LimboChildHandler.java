@@ -1,11 +1,11 @@
 package de.spacepotato.sagittarius.network.handler;
 
-import de.spacpotato.sagittarius.network.handler.ChildNetworkHandler;
-import de.spacpotato.sagittarius.network.protocol.handshake.ClientHandshakePacket;
-import de.spacpotato.sagittarius.network.protocol.login.ClientLoginStartPacket;
-import de.spacpotato.sagittarius.network.protocol.play.ClientKeepAlivePacket;
-import de.spacpotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
-import de.spacpotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
+import de.spacepotato.sagittarius.network.handler.ChildNetworkHandler;
+import de.spacepotato.sagittarius.network.protocol.handshake.ClientHandshakePacket;
+import de.spacepotato.sagittarius.network.protocol.login.ClientLoginStartPacket;
+import de.spacepotato.sagittarius.network.protocol.play.ClientKeepAlivePacket;
+import de.spacepotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
+import de.spacepotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
 import io.netty.channel.Channel;
 
 public class LimboChildHandler extends ChildNetworkHandler {
