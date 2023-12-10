@@ -6,6 +6,7 @@ import de.spacpotato.sagittarius.network.protocol.handshake.ClientHandshakePacke
 import de.spacpotato.sagittarius.network.protocol.login.ClientLoginStartPacket;
 import de.spacpotato.sagittarius.network.protocol.mappings.PacketMappings;
 import de.spacpotato.sagittarius.network.protocol.mappings.PacketRegistry;
+import de.spacpotato.sagittarius.network.protocol.play.ClientKeepAlivePacket;
 import de.spacpotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
 import de.spacpotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
 import io.netty.channel.Channel;
@@ -45,5 +46,7 @@ public abstract class ChildNetworkHandler {
 	public abstract void handleStatusPing(ClientStatusPingPacket packet);
 
 	public abstract void handleLoginStart(ClientLoginStartPacket packet);
+
+	public abstract void handleKeepAlive(ClientKeepAlivePacket packet);
 	
 }

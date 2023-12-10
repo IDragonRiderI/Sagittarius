@@ -6,6 +6,7 @@ import de.spacpotato.sagittarius.network.protocol.Packet;
 import de.spacpotato.sagittarius.network.protocol.State;
 import de.spacpotato.sagittarius.network.protocol.handshake.ClientHandshakePacket;
 import de.spacpotato.sagittarius.network.protocol.login.ClientLoginStartPacket;
+import de.spacpotato.sagittarius.network.protocol.play.ClientKeepAlivePacket;
 import de.spacpotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
 import de.spacpotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
 
@@ -28,6 +29,8 @@ public class PacketRegistry {
 		registerPacket(State.STATUS, new ClientStatusPingPacket());
 
 		registerPacket(State.LOGIN, new ClientLoginStartPacket());
+		
+		registerPacket(State.PLAY, new ClientKeepAlivePacket());		
 	}
 	
 	private static void registerPacket(State state, Packet packet) {
