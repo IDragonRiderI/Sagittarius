@@ -3,8 +3,11 @@ package de.spacepotato.sagittarius.network.protocol;
 import java.io.DataOutputStream;
 import java.io.UnsupportedEncodingException;
 
+import de.spacepotato.sagittarius.nbt.NBT;
+import de.spacepotato.sagittarius.nbt.NBTOutputStream;
 import de.spacepotato.sagittarius.network.handler.ChildNetworkHandler;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
 import lombok.extern.slf4j.Slf4j;
 
@@ -186,5 +189,12 @@ public abstract class Packet {
 	public static double readFixedPointNumberByte(ByteBuf buf) {
 		byte i = buf.readByte();
 		return (double) i / 32.0D;
+	}
+	
+	public static void writeNBT(ByteBuf buf, NBT nbt) throws Exception {
+		try(NBTOutputStream out = new NBTOutputStream(new ByteBufOutputStream(buf))){
+			if(nbt == null) out.write(0);
+			else out.writeTag(nbt);			
+		}
 	}
 }
