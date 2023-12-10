@@ -1,6 +1,5 @@
 package de.spacepotato.sagittarius.network.handler;
 
-import de.spacepotato.sagittarius.network.handler.ChildNetworkHandler;
 import de.spacepotato.sagittarius.network.protocol.handshake.ClientHandshakePacket;
 import de.spacepotato.sagittarius.network.protocol.login.ClientLoginStartPacket;
 import de.spacepotato.sagittarius.network.protocol.play.ClientKeepAlivePacket;
