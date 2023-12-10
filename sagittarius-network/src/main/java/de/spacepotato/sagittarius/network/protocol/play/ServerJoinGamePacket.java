@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ServerPacketJoinGame extends Packet {
+public class ServerJoinGamePacket extends Packet {
 
 	private int entityId;
 	private byte gameMode;
@@ -32,7 +32,7 @@ public class ServerPacketJoinGame extends Packet {
 	
 	@Override
 	public Packet createNewPacket() {
-		return new ServerPacketJoinGame();
+		return new ServerJoinGamePacket();
 	}
 
 	@Override

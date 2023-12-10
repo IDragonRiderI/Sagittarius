@@ -7,6 +7,10 @@ import de.spacepotato.sagittarius.network.protocol.State;
 import de.spacepotato.sagittarius.network.protocol.handshake.ClientHandshakePacket;
 import de.spacepotato.sagittarius.network.protocol.login.ClientLoginStartPacket;
 import de.spacepotato.sagittarius.network.protocol.play.ClientKeepAlivePacket;
+import de.spacepotato.sagittarius.network.protocol.play.ClientLookPacket;
+import de.spacepotato.sagittarius.network.protocol.play.ClientPositionLookPacket;
+import de.spacepotato.sagittarius.network.protocol.play.ClientPositionPacket;
+import de.spacepotato.sagittarius.network.protocol.play.ClientSettingsPacket;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
 
@@ -31,6 +35,10 @@ public class PacketRegistry {
 		registerPacket(State.LOGIN, new ClientLoginStartPacket());
 		
 		registerPacket(State.PLAY, new ClientKeepAlivePacket());		
+		registerPacket(State.PLAY, new ClientPositionPacket());
+		registerPacket(State.PLAY, new ClientLookPacket());
+		registerPacket(State.PLAY, new ClientPositionLookPacket());
+		registerPacket(State.PLAY, new ClientSettingsPacket());
 	}
 	
 	private static void registerPacket(State state, Packet packet) {
