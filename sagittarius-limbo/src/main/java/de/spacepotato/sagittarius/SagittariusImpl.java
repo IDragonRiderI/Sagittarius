@@ -103,7 +103,7 @@ public class SagittariusImpl extends Sagittarius {
 		server.setNativeNetworking(config.shouldUseNativeNetworking());
 		server.start();
 		
-		keepAliveTask = scheduler.repeat(this::tickKeepAlive, 20 * 10, 20 * 10);
+		keepAliveTask = scheduler.repeat(this::tickKeepAlive, getConfig().getKeepAliveDelay(), getConfig().getKeepAliveDelay());
 		
 		scheduler.startProcessing();
 	}
@@ -119,7 +119,7 @@ public class SagittariusImpl extends Sagittarius {
 		server.setNativeNetworking(config.shouldUseNativeNetworking());
 		
 		keepAliveTask.cancel();
-		keepAliveTask = scheduler.repeat(this::tickKeepAlive, 20 * 10, 20 * 10);
+		keepAliveTask = scheduler.repeat(this::tickKeepAlive, getConfig().getKeepAliveDelay(), getConfig().getKeepAliveDelay());
 	}
 	
 	private void shutdown() {
@@ -133,7 +133,7 @@ public class SagittariusImpl extends Sagittarius {
 	}
 	
 	private void tickKeepAlive() {
-		int threshold = 5;
+		int threshold = getConfig().getMaxKeepAlivePackets();
 		
 		int keepAliveId = random.nextInt();
 		List<Player> timeOut = new ArrayList<>();

@@ -1,6 +1,7 @@
 package de.spacepotato.sagittarius.cache;
 
 import de.spacepotato.sagittarius.GameMode;
+import de.spacepotato.sagittarius.Sagittarius;
 import de.spacepotato.sagittarius.network.protocol.play.ServerJoinGamePacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerPlayerAbilitiesPacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerPlayerPositionAndLookPacket;
@@ -8,6 +9,7 @@ import de.spacepotato.sagittarius.network.protocol.play.ServerSpawnPositionPacke
 import de.spacepotato.sagittarius.world.BlockPosition;
 import de.spacepotato.sagittarius.world.Difficulty;
 import de.spacepotato.sagittarius.world.Dimension;
+import de.spacepotato.sagittarius.world.Location;
 import lombok.Getter;
 
 @Getter
@@ -30,38 +32,40 @@ public class PacketCache {
 	}
 	
 	private void createJoinGame() {
-		GameMode gameMode = GameMode.SURVIVAL;
-		Dimension dimension = Dimension.OVERWORLD;
-		Difficulty difficulty = Difficulty.EASY;
-		boolean reducedDebugInfo = false;
-		joinGame = new ServerJoinGamePacket(0, (byte) gameMode.ordinal(), (byte) dimension.ordinal(), (byte) difficulty.ordinal(), (byte) 1, "default", reducedDebugInfo);
+		GameMode gameMode = Sagittarius.getInstance().getConfig().getGameMode();
+		Dimension dimension = Sagittarius.getInstance().getConfig().getDimension();
+		Difficulty difficulty = Sagittarius.getInstance().getConfig().getDifficulty();
+		boolean reducedDebugInfo = Sagittarius.getInstance().getConfig().isReducedDebugInfo();
+		joinGame = new ServerJoinGamePacket(0, (byte) gameMode.getId(), (byte) dimension.getId(), (byte) difficulty.ordinal(), (byte) 1, "default", reducedDebugInfo);
 	}
 	
 	private void createSpawnPosition() {
-		int x = 0;
-		int y = 100;
-		int z = 0;
+		Location spawn = Sagittarius.getInstance().getConfig().getSpawnPoint();
+		int x = (int) Math.floor(spawn.getX());
+		int y = (int) Math.floor(spawn.getY());
+		int z = (int) Math.floor(spawn.getZ());
 		spawnPosition = new ServerSpawnPositionPacket(new BlockPosition(x, y, z));
 	}
 	
 	private void createPositionAndLook() {
-		double x = 0;
-		double y = 100;
-		double z = 0;
-		float yaw = 0;
-		float pitch = 0;
+		Location spawn = Sagittarius.getInstance().getConfig().getSpawnPoint();
+		double x = spawn.getX();
+		double y = spawn.getY();
+		double z = spawn.getZ();
+		float yaw = spawn.getYaw();
+		float pitch = spawn.getPitch();
 		positionAndLook = new ServerPlayerPositionAndLookPacket(x, y, z, yaw, pitch, (byte) 0);
 	}
 	
 	private void createPlayerAbilities() {
-		boolean canFly = false;
-		boolean isFlying = false;
+		boolean canFly = Sagittarius.getInstance().getConfig().canFly();
+		boolean isFlying = Sagittarius.getInstance().getConfig().isAutoFly();
 
 		byte flags = 0;
 		if (isFlying) flags |= 0x02;
 		if (canFly) flags |= 0x04;
 		
-		float flySpeed = 0.05F;
+		float flySpeed = Sagittarius.getInstance().getConfig().getFlySpeed();
 		float movementSpeed = 0.1F;
 		playerAbilities = new ServerPlayerAbilitiesPacket(flags, flySpeed, movementSpeed);
 	}

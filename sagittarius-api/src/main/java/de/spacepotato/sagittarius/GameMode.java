@@ -30,4 +30,8 @@ public enum GameMode {
 		return null;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 }

@@ -4,3 +4,29 @@ port = 25564
 nativeNetworking = true
 viaversion = true
 
+[internal]
+# Specifies the delay between keep-alive heartbeats in ticks.
+heartbeatDelay = 100
+# Specifies how many heartbeats a client may miss until it gets kicked.
+# The exact amount of ticks can be calculated as follows: heartbeatDelay * heartbeatTimeout
+heartbeatTimeout = 6
+
+[player]
+gamemode = "SURVIVAL"
+tablistGamemode = "default"
+allowFly = false
+autoFly = false
+flySpeed = 0.05
+defaultLanguage = "en_US"
+hideDebugInfo = false
+
+[world]
+spawnX = 0.5
+spawnY = 100
+spawnZ = 0.5
+yaw = 0
+pitch = 0
+biome = "JUNGLE"
+difficulty = "EASY"
+# May be "OVERWORLD", "NETHER" or "END"
+dimension = "OVERWORLD"

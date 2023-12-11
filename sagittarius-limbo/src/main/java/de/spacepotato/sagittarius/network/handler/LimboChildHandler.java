@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+import de.spacepotato.sagittarius.GameMode;
 import de.spacepotato.sagittarius.Sagittarius;
 import de.spacepotato.sagittarius.SagittariusImpl;
 import de.spacepotato.sagittarius.entity.PlayerImpl;
@@ -123,7 +124,8 @@ public class LimboChildHandler extends ChildNetworkHandler {
 		
 		// Add to tablist for skin
 		List<ServerPlayerListItemPacket.PlayerListEntry> entries = new ArrayList<>();
-		entries.add(new ServerPlayerListItemPacket.PlayerListEntry(player.getUUID(), player.getName(), player.getSkin().orElse(new SkinProperty[0]), 0, 0, null));
+		GameMode gameMode = Sagittarius.getInstance().getConfig().getTabGameMode().orElse(Sagittarius.getInstance().getConfig().getGameMode());
+		entries.add(new ServerPlayerListItemPacket.PlayerListEntry(player.getUUID(), player.getName(), player.getSkin().orElse(new SkinProperty[0]), gameMode.getId(), 0, null));
 		ServerPlayerListItemPacket tablist = new ServerPlayerListItemPacket((byte) 0, entries);
 		sendPacket(tablist);
 		

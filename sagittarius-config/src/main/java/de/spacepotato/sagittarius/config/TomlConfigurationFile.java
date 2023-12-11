@@ -34,5 +34,8 @@ public class TomlConfigurationFile {
 	}
 	
 	private NetworkConfig network;
+	private PlayerConfig player;
+	private InternalConfig internal;
+	private WorldConfig world;
 	
 }
