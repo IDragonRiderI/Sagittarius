@@ -21,11 +21,12 @@ public class SagittariusServerImpl implements SagittariusServer {
 	private final ParentNetworkHandler parentHandler;
 	private String host;
 	private int port;
+	private boolean nativeNetworking;
 	private Channel server;
-	
 	
 	public SagittariusServerImpl(ParentNetworkHandler parentHandler) {
 		this.parentHandler = parentHandler;
+		nativeNetworking = true;
 	}
 	
 	@Override
@@ -36,7 +37,7 @@ public class SagittariusServerImpl implements SagittariusServer {
 	@Override
 	public void start() {
 		if (isRunning()) return;
-		boolean epoll = Epoll.isAvailable();
+		boolean epoll = nativeNetworking && Epoll.isAvailable();
 		EventLoopGroup bossGroup = epoll ? new EpollEventLoopGroup(1) : new NioEventLoopGroup(1);
 		EventLoopGroup workerGroup = epoll ? new EpollEventLoopGroup() : new NioEventLoopGroup();
 		
@@ -83,6 +84,10 @@ public class SagittariusServerImpl implements SagittariusServer {
 	public void setHostAndPort(String host, int port) {
 		this.host = host;
 		this.port = port;
+	}
+	
+	public void setNativeNetworking(boolean shouldUseNativeNetworking) {
+		this.nativeNetworking = shouldUseNativeNetworking;
 	}
 	
 	public Channel getServer() {

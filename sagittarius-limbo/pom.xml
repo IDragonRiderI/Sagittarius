@@ -32,5 +32,10 @@
 			<artifactId>sagittarius-config</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>de.spacepotato</groupId>
+			<artifactId>sagittarius-chat</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

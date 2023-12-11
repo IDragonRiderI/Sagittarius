@@ -14,10 +14,12 @@ import de.spacepotato.sagittarius.network.protocol.play.ClientSettingsPacket;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
 import io.netty.channel.Channel;
+import lombok.Getter;
 
 public abstract class ChildNetworkHandler {
 
 	protected final Channel channel;
+	@Getter
 	protected State state;
 	protected PacketMappings stateMappings;
 	

@@ -1,5 +1,6 @@
 package de.spacepotato.sagittarius;
 
+import de.spacepotato.sagittarius.cache.PacketCache;
 import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.config.SagittariusConfig;
 import de.spacepotato.sagittarius.network.SagittariusServerImpl;
@@ -11,15 +12,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SagittariusImpl extends Sagittarius {
 
+	public static SagittariusImpl getInstance() {
+		return (SagittariusImpl) instance;
+	}
+	
 	private final SagittariusScheduler scheduler;
 	private final SagittariusServerImpl server;
 	private final SagittariusConfig config;
+	private final PacketCache packetCache;
 	
 	public SagittariusImpl() {
 		setInstance(this);
 		
 		// Initialize variables
 		config = new SagittariusConfig();
+		packetCache = new PacketCache();
 		scheduler = new SagittariusScheduler();
 		server = new SagittariusServerImpl(new LimboParentHandler());
 		
@@ -41,6 +48,10 @@ public class SagittariusImpl extends Sagittarius {
 	@Override
 	public LimboConfig getConfig() {
 		return config;
+	}
+	
+	public PacketCache getPacketCache() {
+		return packetCache;
 	}
 	
 	// ============================================================ \\
@@ -65,7 +76,11 @@ public class SagittariusImpl extends Sagittarius {
 	
 	private void load() {
 		log.info("Starting " + getName() + " v." + getVersion() + "...");
-		server.setHostAndPort("127.0.0.1", 25564);
+		
+		packetCache.createPackets();
+		
+		server.setHostAndPort(config.getHost(), config.getPort());
+		server.setNativeNetworking(config.shouldUseNativeNetworking());
 		server.start();
 		
 		scheduler.startProcessing();

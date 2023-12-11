@@ -5,7 +5,7 @@ import de.spacepotato.sagittarius.scheduler.Scheduler;
 
 public abstract class Sagittarius {
 
-	private static Sagittarius instance;
+	protected static Sagittarius instance;
 	
 	public static Sagittarius getInstance() {
 		return instance;
