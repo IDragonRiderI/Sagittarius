@@ -1,5 +1,7 @@
 package de.spacepotato.sagittarius;
 
+import de.spacepotato.sagittarius.config.LimboConfig;
+import de.spacepotato.sagittarius.config.SagittariusConfig;
 import de.spacepotato.sagittarius.network.SagittariusServerImpl;
 import de.spacepotato.sagittarius.network.handler.LimboParentHandler;
 import de.spacepotato.sagittarius.scheduler.SagittariusScheduler;
@@ -11,11 +13,13 @@ public class SagittariusImpl extends Sagittarius {
 
 	private final SagittariusScheduler scheduler;
 	private final SagittariusServerImpl server;
+	private final SagittariusConfig config;
 	
 	public SagittariusImpl() {
 		setInstance(this);
 		
 		// Initialize variables
+		config = new SagittariusConfig();
 		scheduler = new SagittariusScheduler();
 		server = new SagittariusServerImpl(new LimboParentHandler());
 		
@@ -32,6 +36,11 @@ public class SagittariusImpl extends Sagittarius {
 	@Override
 	public Scheduler getScheduler() {
 		return scheduler;
+	}
+	
+	@Override
+	public LimboConfig getConfig() {
+		return config;
 	}
 	
 	// ============================================================ \\

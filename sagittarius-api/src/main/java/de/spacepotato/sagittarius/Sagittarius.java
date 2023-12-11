@@ -1,5 +1,6 @@
 package de.spacepotato.sagittarius;
 
+import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.scheduler.Scheduler;
 
 public abstract class Sagittarius {
@@ -30,5 +31,11 @@ public abstract class Sagittarius {
 	 * @return The scheduler instance.
 	 */
 	public abstract Scheduler getScheduler();
+	
+	/**
+	 * Returns the config instance that defines how the server will behave.
+	 * @return The instance to the current configuration.
+	 */
+	public abstract LimboConfig getConfig();
 	
 }

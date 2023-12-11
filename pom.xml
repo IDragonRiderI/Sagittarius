@@ -11,6 +11,7 @@
 		<module>sagittarius-chat</module>
 		<module>sagittarius-nbt</module>
 		<module>sagittarius-log</module>
+		<module>sagittarius-config</module>
 	</modules>
 	<properties>
 		<maven.compiler.target>1.8</maven.compiler.target>

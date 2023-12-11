@@ -5,12 +5,12 @@
 		<artifactId>sagittarius-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>sagittarius-limbo</artifactId>
+	<artifactId>sagittarius-config</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>de.spacepotato</groupId>
-			<artifactId>sagittarius-api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>com.moandjiezana.toml</groupId>
+			<artifactId>toml4j</artifactId>
+			<version>0.7.2</version>
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
@@ -19,17 +19,7 @@
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
-			<artifactId>sagittarius-network</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.carrotsearch</groupId>
-			<artifactId>hppc</artifactId>
-			<version>0.9.1</version>
-		</dependency>
-		<dependency>
-			<groupId>de.spacepotato</groupId>
-			<artifactId>sagittarius-config</artifactId>
+			<artifactId>sagittarius-api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
