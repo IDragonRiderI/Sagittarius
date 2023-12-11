@@ -14,6 +14,7 @@ import de.spacepotato.sagittarius.mojang.GameProfile;
 import de.spacepotato.sagittarius.mojang.OfflineGameProfile;
 import de.spacepotato.sagittarius.mojang.SkinProperty;
 import de.spacepotato.sagittarius.network.protocol.Packet;
+import de.spacepotato.sagittarius.network.protocol.PacketContainer;
 import de.spacepotato.sagittarius.network.protocol.State;
 import de.spacepotato.sagittarius.network.protocol.handshake.ClientHandshakePacket;
 import de.spacepotato.sagittarius.network.protocol.login.ClientLoginStartPacket;
@@ -42,6 +43,10 @@ public class LimboChildHandler extends ChildNetworkHandler {
 	
 	public void sendPacket(Packet packet) {
 		channel.writeAndFlush(packet);
+	}
+	
+	public void sendPacket(PacketContainer container) {
+		container.send(channel);
 	}
 
 	public int requestKeepAlive(int keepAliveId) {

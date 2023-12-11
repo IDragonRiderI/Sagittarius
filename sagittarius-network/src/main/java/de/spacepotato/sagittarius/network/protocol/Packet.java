@@ -32,6 +32,7 @@ public abstract class Packet {
 	
 	public ByteBuf encode() throws Exception {
 		ByteBuf buf = Unpooled.buffer();
+		writeVarInt(buf, getId());
 		write(buf);
 		return buf;
 	}
