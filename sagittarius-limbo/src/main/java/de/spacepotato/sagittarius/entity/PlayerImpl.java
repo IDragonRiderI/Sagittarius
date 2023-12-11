@@ -7,6 +7,7 @@ import de.spacepotato.sagittarius.chat.ChatComponent;
 import de.spacepotato.sagittarius.mojang.GameProfile;
 import de.spacepotato.sagittarius.mojang.SkinProperty;
 import de.spacepotato.sagittarius.network.handler.LimboChildHandler;
+import de.spacepotato.sagittarius.network.protocol.Packet;
 import de.spacepotato.sagittarius.network.protocol.State;
 import de.spacepotato.sagittarius.network.protocol.play.ServerChatMessagePacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerDisconnectPacket;
@@ -39,13 +40,13 @@ public class PlayerImpl implements Player {
 	@Override
 	public void sendMessage(String message) {
 		ServerChatMessagePacket packet = new ServerChatMessagePacket(new ChatComponent(message).toJson(), (byte) 0);
-		childHandler.sendPacket(packet);
+		sendPacket(packet);
 	}
 
 	@Override
 	public void kick(String message) {
 		ServerDisconnectPacket packet = new ServerDisconnectPacket(new ChatComponent(message).toJson());
-		childHandler.sendPacket(packet);
+		sendPacket(packet);
 	}
 
 	@Override
@@ -56,6 +57,14 @@ public class PlayerImpl implements Player {
 	@Override
 	public boolean isConnected() {
 		return !isConnecting();
+	}
+	
+	public void sendPacket(Packet packet) {
+		childHandler.sendPacket(packet);
+	}
+
+	public int requestKeepAlive(int keepAliveId) {
+		return childHandler.requestKeepAlive(keepAliveId);
 	}
 
 }

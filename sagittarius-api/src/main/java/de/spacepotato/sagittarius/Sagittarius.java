@@ -1,6 +1,9 @@
 package de.spacepotato.sagittarius;
 
+import java.util.List;
+
 import de.spacepotato.sagittarius.config.LimboConfig;
+import de.spacepotato.sagittarius.entity.Player;
 import de.spacepotato.sagittarius.scheduler.Scheduler;
 
 public abstract class Sagittarius {
@@ -37,5 +40,12 @@ public abstract class Sagittarius {
 	 * @return The instance to the current configuration.
 	 */
 	public abstract LimboConfig getConfig();
+	
+	
+	/**
+	 * Returns a list of all logged-in players.
+	 * @return A list of all logged-in players.
+	 */
+	public abstract List<Player> getPlayers();
 	
 }

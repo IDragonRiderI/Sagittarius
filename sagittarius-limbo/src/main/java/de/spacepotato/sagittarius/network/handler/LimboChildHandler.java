@@ -1,8 +1,11 @@
 package de.spacepotato.sagittarius.network.handler;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
+import de.spacepotato.sagittarius.Sagittarius;
 import de.spacepotato.sagittarius.SagittariusImpl;
 import de.spacepotato.sagittarius.entity.PlayerImpl;
 import de.spacepotato.sagittarius.mojang.BungeeCordGameProfile;
@@ -19,6 +22,7 @@ import de.spacepotato.sagittarius.network.protocol.play.ClientLookPacket;
 import de.spacepotato.sagittarius.network.protocol.play.ClientPositionLookPacket;
 import de.spacepotato.sagittarius.network.protocol.play.ClientPositionPacket;
 import de.spacepotato.sagittarius.network.protocol.play.ClientSettingsPacket;
+import de.spacepotato.sagittarius.network.protocol.play.ServerEntityMetadataPacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerPlayerListItemPacket;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
@@ -28,13 +32,28 @@ public class LimboChildHandler extends ChildNetworkHandler {
 
 	private PlayerImpl player;
 	private ClientHandshakePacket handshake;
+	private Queue<Integer> keepAliveIds;
 	
 	public LimboChildHandler(Channel channel) {
 		super(channel);
+		keepAliveIds = new ArrayDeque<>();
 	}
 	
 	public void sendPacket(Packet packet) {
 		channel.writeAndFlush(packet);
+	}
+
+	public int requestKeepAlive(int keepAliveId) {
+		keepAliveIds.add(keepAliveId);
+		return keepAliveIds.size();
+	}
+	
+	@Override
+	public void handleDisconnect() {
+		if (player == null) return;
+		synchronized (Sagittarius.getInstance().getPlayers()) {
+			Sagittarius.getInstance().getPlayers().remove(player);
+		}
 	}
 
 	// ============================================================ \\
@@ -110,6 +129,10 @@ public class LimboChildHandler extends ChildNetworkHandler {
 		
 		sendPacket(SagittariusImpl.getInstance().getPacketCache().getPositionAndLook());
 		sendPacket(SagittariusImpl.getInstance().getPacketCache().getPlayerAbilities());
+		
+		synchronized (Sagittarius.getInstance().getPlayers()) {
+			Sagittarius.getInstance().getPlayers().add(player);
+		}
 
 	}
 	
@@ -121,12 +144,18 @@ public class LimboChildHandler extends ChildNetworkHandler {
 
 	@Override
 	public void handleKeepAlive(ClientKeepAlivePacket packet) {
-		
+		// Keep-Alive mismatch!
+		if (keepAliveIds.size() == 0 || keepAliveIds.poll().intValue() != packet.getKeepAliveId()) {
+			player.kick("Invalid Keep-Alive packet received.");
+			return;
+		}
 	}
 
 	@Override
 	public void handleClientSettings(ClientSettingsPacket packet) {
-		
+		// Properly update skin
+		ServerEntityMetadataPacket metadata = new ServerEntityMetadataPacket(packet.getDisplayedSkinParts());
+		sendPacket(metadata);
 	}
 
 	@Override
@@ -143,5 +172,5 @@ public class LimboChildHandler extends ChildNetworkHandler {
 	public void handlePositionLook(ClientPositionLookPacket packet) {
 		
 	}
-	
+
 }

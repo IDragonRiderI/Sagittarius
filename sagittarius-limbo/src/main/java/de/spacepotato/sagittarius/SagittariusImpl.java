@@ -1,11 +1,20 @@
 package de.spacepotato.sagittarius;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import de.spacepotato.sagittarius.cache.PacketCache;
 import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.config.SagittariusConfig;
+import de.spacepotato.sagittarius.entity.Player;
+import de.spacepotato.sagittarius.entity.PlayerImpl;
 import de.spacepotato.sagittarius.network.SagittariusServerImpl;
 import de.spacepotato.sagittarius.network.handler.LimboParentHandler;
+import de.spacepotato.sagittarius.network.protocol.play.ServerKeepAlivePacket;
 import de.spacepotato.sagittarius.scheduler.SagittariusScheduler;
+import de.spacepotato.sagittarius.scheduler.ScheduledTask;
 import de.spacepotato.sagittarius.scheduler.Scheduler;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,15 +29,21 @@ public class SagittariusImpl extends Sagittarius {
 	private final SagittariusServerImpl server;
 	private final SagittariusConfig config;
 	private final PacketCache packetCache;
+	private final List<Player> players;
+	private final Random random;
+	
+	private ScheduledTask keepAliveTask;
 	
 	public SagittariusImpl() {
 		setInstance(this);
 		
 		// Initialize variables
+		players = Collections.synchronizedList(new ArrayList<>());
 		config = new SagittariusConfig();
 		packetCache = new PacketCache();
 		scheduler = new SagittariusScheduler();
 		server = new SagittariusServerImpl(new LimboParentHandler());
+		random = new Random();
 		
 		// Start the actual server
 		load();
@@ -48,6 +63,11 @@ public class SagittariusImpl extends Sagittarius {
 	@Override
 	public LimboConfig getConfig() {
 		return config;
+	}
+	
+	@Override
+	public List<Player> getPlayers() {
+		return players;
 	}
 	
 	public PacketCache getPacketCache() {
@@ -83,7 +103,23 @@ public class SagittariusImpl extends Sagittarius {
 		server.setNativeNetworking(config.shouldUseNativeNetworking());
 		server.start();
 		
+		keepAliveTask = scheduler.repeat(this::tickKeepAlive, 20 * 10, 20 * 10);
+		
 		scheduler.startProcessing();
+	}
+	
+	@SuppressWarnings("unused")
+	private void reload() {
+		log.info("Reloading server...");
+		server.stop();
+	
+		packetCache.createPackets();
+		
+		server.setHostAndPort(config.getHost(), config.getPort());
+		server.setNativeNetworking(config.shouldUseNativeNetworking());
+		
+		keepAliveTask.cancel();
+		keepAliveTask = scheduler.repeat(this::tickKeepAlive, 20 * 10, 20 * 10);
 	}
 	
 	private void shutdown() {
@@ -94,8 +130,30 @@ public class SagittariusImpl extends Sagittarius {
 		
 		log.info("Closing socket...");
 		getServer().stop();
+	}
+	
+	private void tickKeepAlive() {
+		int threshold = 5;
 		
-		
+		int keepAliveId = random.nextInt();
+		List<Player> timeOut = new ArrayList<>();
+		synchronized (players) {
+			ServerKeepAlivePacket packet = new ServerKeepAlivePacket(keepAliveId);
+			
+			for (Player player : players) {
+				PlayerImpl impl = (PlayerImpl) player;
+				int keepAlives = impl.requestKeepAlive(keepAliveId);
+				if (keepAlives > threshold) {
+					// Avoid concurrent modification exception
+					timeOut.add(player);
+					continue;
+				}
+				impl.sendPacket(packet);
+			}
+		}
+		for (Player player : timeOut) {
+			player.kick("Timed out.");
+		}
 	}
 	
 }
