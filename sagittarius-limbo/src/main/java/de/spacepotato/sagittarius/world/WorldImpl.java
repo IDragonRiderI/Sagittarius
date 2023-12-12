@@ -9,15 +9,31 @@ import com.carrotsearch.hppc.cursors.ObjectCursor;
 import de.spacepotato.sagittarius.world.metadata.BlockMetadata;
 import lombok.Getter;
 
+@Getter
 public class WorldImpl implements World {
 	
 	private LongObjectHashMap<ChunkImpl> chunks;
-	@Getter
 	private List<BlockMetadata> metadata;
 	
 	public WorldImpl() {
 		chunks = new LongObjectHashMap<>();
 		metadata = new ArrayList<>();
+	}
+	
+	public void createStonePlatform() {
+		for(int x = -5; x <= 5; x++) {
+			for(int z = -5; z <= 5; z++) {
+				ChunkImpl c = new ChunkImpl(x, z);
+				chunks.put(getId(x, z), c);
+				for(int relX = 0; relX < 16; relX++) {
+					for(int relZ = 0; relZ < 16; relZ++) {
+						for(int y = 0; y < 100; y++) {
+							c.set(relX, y, relZ, 1, (byte)0);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public ChunkImpl getChunk(int x, int z) {

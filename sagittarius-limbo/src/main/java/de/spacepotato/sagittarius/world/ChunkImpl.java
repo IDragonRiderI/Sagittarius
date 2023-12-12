@@ -115,5 +115,13 @@ public class ChunkImpl implements Chunk {
 		return bytes;
 	}
 
+	@Override
+	public int getSizeEstimate(short bitmask, boolean skyLight, boolean full) {
+		int sections = full ? 16 : Integer.bitCount(bitmask);
+		int blocks = 16*16*16*sections;
+
+		return blocks * 2 + (skyLight ? blocks : blocks/2) + (full ? 256 : 0);
+	}
+
 	
 }

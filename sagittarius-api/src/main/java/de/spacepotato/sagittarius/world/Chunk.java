@@ -3,6 +3,18 @@ package de.spacepotato.sagittarius.world;
 public interface Chunk {
 
 	/**
+	 * Returns the X coordinate of the chunk.
+	 * @return The X coordinate of the chunk.
+	 */
+	int getX();
+	
+	/**
+	 * Returns the Z coordinate of the chunk.
+	 * @return The Z coordinate of the chunk.
+	 */
+	int getZ();
+	
+	/**
 	 * Changes the block at the given chunk coordinates.
 	 * 
 	 * @param x The relative (chunk-based) x coordinate of the block.
@@ -42,5 +54,11 @@ public interface Chunk {
 	 */
 	
 	byte[] encode(short bitmask, boolean skyLight, boolean full);
+	
+	/**
+	 * Returns an estimate for the chunk's size.
+	 * @return An estimate of the chunk's size in bytes.
+	 */
+	int getSizeEstimate(short bitmask, boolean skyLight, boolean full);
 	
 }

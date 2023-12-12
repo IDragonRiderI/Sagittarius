@@ -8,6 +8,7 @@ import de.spacepotato.sagittarius.mojang.GameProfile;
 import de.spacepotato.sagittarius.mojang.SkinProperty;
 import de.spacepotato.sagittarius.network.handler.LimboChildHandler;
 import de.spacepotato.sagittarius.network.protocol.Packet;
+import de.spacepotato.sagittarius.network.protocol.PacketContainer;
 import de.spacepotato.sagittarius.network.protocol.State;
 import de.spacepotato.sagittarius.network.protocol.play.ServerChatMessagePacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerDisconnectPacket;
@@ -60,6 +61,10 @@ public class PlayerImpl implements Player {
 	}
 	
 	public void sendPacket(Packet packet) {
+		childHandler.sendPacket(packet);
+	}
+	
+	public void sendPacket(PacketContainer packet) {
 		childHandler.sendPacket(packet);
 	}
 

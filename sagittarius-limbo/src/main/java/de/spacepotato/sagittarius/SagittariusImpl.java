@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import de.spacepotato.sagittarius.cache.PacketCache;
+import de.spacepotato.sagittarius.cache.WorldCache;
 import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.config.SagittariusConfig;
 import de.spacepotato.sagittarius.entity.Player;
@@ -31,6 +32,7 @@ public class SagittariusImpl extends Sagittarius {
 	private final PacketCache packetCache;
 	private final List<Player> players;
 	private final Random random;
+	private final WorldCache worldCache;
 	
 	private ScheduledTask keepAliveTask;
 	
@@ -41,6 +43,7 @@ public class SagittariusImpl extends Sagittarius {
 		players = Collections.synchronizedList(new ArrayList<>());
 		config = new SagittariusConfig();
 		packetCache = new PacketCache();
+		worldCache = new WorldCache();
 		scheduler = new SagittariusScheduler();
 		server = new SagittariusServerImpl(new LimboParentHandler());
 		random = new Random();
@@ -52,7 +55,7 @@ public class SagittariusImpl extends Sagittarius {
 
 	@Override
 	public SagittariusServer getServer() {
-		return null;
+		return server;
 	}
 
 	@Override
@@ -72,6 +75,10 @@ public class SagittariusImpl extends Sagittarius {
 	
 	public PacketCache getPacketCache() {
 		return packetCache;
+	}
+	
+	public WorldCache getWorldCache() {
+		return worldCache;
 	}
 	
 	// ============================================================ \\
@@ -98,13 +105,13 @@ public class SagittariusImpl extends Sagittarius {
 		log.info("Starting " + getName() + " v." + getVersion() + "...");
 		
 		packetCache.createPackets();
+		worldCache.load();
 		
 		server.setHostAndPort(config.getHost(), config.getPort());
 		server.setNativeNetworking(config.shouldUseNativeNetworking());
 		server.start();
 		
 		keepAliveTask = scheduler.repeat(this::tickKeepAlive, getConfig().getKeepAliveDelay(), getConfig().getKeepAliveDelay());
-		
 		scheduler.startProcessing();
 	}
 	
@@ -114,6 +121,7 @@ public class SagittariusImpl extends Sagittarius {
 		server.stop();
 	
 		packetCache.createPackets();
+		worldCache.load();
 		
 		server.setHostAndPort(config.getHost(), config.getPort());
 		server.setNativeNetworking(config.shouldUseNativeNetworking());

@@ -137,6 +137,8 @@ public class LimboChildHandler extends ChildNetworkHandler {
 		sendPacket(SagittariusImpl.getInstance().getPacketCache().getPositionAndLook());
 		sendPacket(SagittariusImpl.getInstance().getPacketCache().getPlayerAbilities());
 		
+		SagittariusImpl.getInstance().getWorldCache().send(player);
+		
 		synchronized (Sagittarius.getInstance().getPlayers()) {
 			Sagittarius.getInstance().getPlayers().add(player);
 		}
