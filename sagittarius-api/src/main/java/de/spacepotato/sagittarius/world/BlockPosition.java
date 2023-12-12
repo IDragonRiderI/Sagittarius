@@ -8,9 +8,9 @@ public class BlockPosition {
 	// Therefore we do not need to shift the y coordinate at all.
 	// However, we do need to shift the z coordinate 12 bits to the left as the y coordinate occupies 12 bits.
 	// The same goes for x: y occupies 12 bits and z occupies 26 bits, resulting in a 38 bit shift.
-	private static final int SHIFT_Y = 0;
-	private static final int SHIFT_Z = 12;
-	private static final int SHIFT_X = 26 + SHIFT_Z;
+	private static final int SHIFT_Y = 26;
+	private static final int SHIFT_Z = 0;
+	private static final int SHIFT_X = 38;
 	
 	private static final int CAP_Y = 0xFFF; // 12 bits, 0000 1111 1111 1111
 	private static final int CAP_Z = 0x3FFFFFF; // 26 bits, 0000 0011 1111 1111 1111 1111 1111 1111
@@ -27,9 +27,9 @@ public class BlockPosition {
 	}
 	
 	public long toLong() {
-		int xCapped = x & CAP_X;
-		int zCapped = z & CAP_Z;
-		int yCapped = y & CAP_Y;
+		long xCapped = x & CAP_X;
+		long zCapped = z & CAP_Z;
+		long yCapped = y & CAP_Y;
 		
 		long encoded = (xCapped << SHIFT_X) | (zCapped << SHIFT_Z) | (yCapped << SHIFT_Y);
 		return encoded;
