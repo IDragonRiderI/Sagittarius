@@ -18,7 +18,7 @@ public class PacketContainer {
 	}
 	
 	public void send(Channel channel) {
-		channel.writeAndFlush(buffer.retain());
+		channel.writeAndFlush(buffer.retainedSlice());
 	}
 	
 }
