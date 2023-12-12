@@ -11,19 +11,35 @@ import de.spacepotato.sagittarius.network.protocol.play.ServerMapChunkBulkPacket
 import de.spacepotato.sagittarius.world.Chunk;
 import de.spacepotato.sagittarius.world.ChunkImpl;
 import de.spacepotato.sagittarius.world.WorldImpl;
+import de.spacepotato.sagittarius.world.loader.BlankWorldLoader;
+import de.spacepotato.sagittarius.world.loader.WorldEditSchematicLoader;
+import de.spacepotato.sagittarius.world.loader.WorldLoader;
+import de.spacepotato.sagittarius.world.metadata.BlockMetadata;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class WorldCache {
 
 	private List<PacketContainer> worldPackets;
+	private List<WorldLoader> loaders;
 	
 	public WorldCache() {
-		
+		loaders = new ArrayList<>();
+		loaders.add(new WorldEditSchematicLoader());
+		loaders.add(new BlankWorldLoader());
 	}
 	
 	public void load() {
+		WorldImpl world = null;
+		for (WorldLoader loader : loaders) {
+			if (loader.isSupported()) {
+				log.info("Loading world...");
+				world = loader.loadDefaultWorld();
+				break;
+			}
+		}
+		
 		List<PacketContainer> worldPackets = new ArrayList<>();
-		WorldImpl world = new WorldImpl();
-		world.createStonePlatform();
 		
 		List<Chunk> chunks = new ArrayList<>();
 		for (ObjectCursor<ChunkImpl> c : world.getChunks().values()) {
@@ -59,6 +75,11 @@ public class WorldCache {
 			ServerMapChunkBulkPacket packet = new ServerMapChunkBulkPacket(true, batch);
 			worldPackets.add(new PacketContainer(packet));			
 		});
+		
+		for (BlockMetadata metadata : world.getMetadata()) {
+			worldPackets.add(new PacketContainer(metadata.toPacket()));
+		}
+		
 		
 		this.worldPackets = worldPackets;
 	}
