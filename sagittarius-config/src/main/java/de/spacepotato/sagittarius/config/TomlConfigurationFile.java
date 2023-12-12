@@ -37,5 +37,6 @@ public class TomlConfigurationFile {
 	private PlayerConfig player;
 	private InternalConfig internal;
 	private WorldConfig world;
+	private ConnectConfig connect;
 	
 }

@@ -30,3 +30,24 @@ biome = "JUNGLE"
 difficulty = "EASY"
 # May be "OVERWORLD", "NETHER" or "END"
 dimension = "OVERWORLD"
+
+#This section defines the list of rules that lead to a player being sent to the lobby.
+[connect]
+connectOnMove = true
+# Defines how much a player must move in a single packet to get sent to the lobby.
+moveThreshold = 0.25
+connectOnRotate = true
+# Defines how much a player must rotate in a single packet to get sent to the lobby
+rotateThreshold = 10
+# Defines how long to wait after a player joins until checks are enabled
+delayAfterJoin = 2000
+# If the connection attempt failed, the server will wait for that long until it checks for further player movement
+delayBetweenAttempts = 5000
+# A plugin message is used to connect the player to the lobby. You can either let the Limbo construct the message or provide
+# your own binary payload. Set this to string if you want to serialize the payload using "connectPayloadString".
+# You can also set it to file:<filename> if you want to read it from a file instead. The file must be present if you use this option.
+# In that case it will read the raw bytes of the file and interpret it as the plugin message on startup.
+connectType = "string"
+# This is the data sent to BungeeCord. 
+# All of the strings in here are UTF-8 encoded and stored as array.
+connectPayloadString = ["Connect", "lobby"]

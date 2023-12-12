@@ -28,6 +28,7 @@ import de.spacepotato.sagittarius.network.protocol.play.ServerEntityMetadataPack
 import de.spacepotato.sagittarius.network.protocol.play.ServerPlayerListItemPacket;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
+import de.spacepotato.sagittarius.util.PlayerMovementTracker;
 import io.netty.channel.Channel;
 
 public class LimboChildHandler extends ChildNetworkHandler {
@@ -35,6 +36,7 @@ public class LimboChildHandler extends ChildNetworkHandler {
 	private PlayerImpl player;
 	private ClientHandshakePacket handshake;
 	private Queue<Integer> keepAliveIds;
+	private PlayerMovementTracker movementTracker;
 	
 	public LimboChildHandler(Channel channel) {
 		super(channel);
@@ -117,6 +119,7 @@ public class LimboChildHandler extends ChildNetworkHandler {
 		}
 		
 		player = new PlayerImpl(this, gameProfile);
+		movementTracker = new PlayerMovementTracker(player);
 		
 		// Accept the login attempt
 		ServerLoginSuccessPacket success = new ServerLoginSuccessPacket(player.getUUID().toString(), player.getName());
@@ -170,16 +173,18 @@ public class LimboChildHandler extends ChildNetworkHandler {
 
 	@Override
 	public void handlePosition(ClientPositionPacket packet) {
-		
+		movementTracker.onMove(packet.getX(), packet.getY(), packet.getZ());
 	}
 
 	@Override
 	public void handleLook(ClientLookPacket packet) {
-		
+		movementTracker.onRotate(packet.getYaw(), packet.getPitch());		
 	}
 
 	@Override
 	public void handlePositionLook(ClientPositionLookPacket packet) {
+		movementTracker.onMove(packet.getX(), packet.getY(), packet.getZ());
+		movementTracker.onRotate(packet.getYaw(), packet.getPitch());
 		
 	}
 

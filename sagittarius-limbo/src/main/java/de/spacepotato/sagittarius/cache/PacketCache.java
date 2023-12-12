@@ -6,6 +6,7 @@ import de.spacepotato.sagittarius.network.protocol.PacketContainer;
 import de.spacepotato.sagittarius.network.protocol.play.ServerJoinGamePacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerPlayerAbilitiesPacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerPlayerPositionAndLookPacket;
+import de.spacepotato.sagittarius.network.protocol.play.ServerPluginMessagePacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerSpawnPositionPacket;
 import de.spacepotato.sagittarius.world.BlockPosition;
 import de.spacepotato.sagittarius.world.Difficulty;
@@ -20,6 +21,7 @@ public class PacketCache {
 	private PacketContainer spawnPosition;
 	private PacketContainer positionAndLook;
 	private PacketContainer playerAbilities;
+	private PacketContainer connectPacket;
 	
 	public PacketCache() {
 		
@@ -30,6 +32,7 @@ public class PacketCache {
 		createSpawnPosition();
 		createPositionAndLook();
 		createPlayerAbilities();
+		createConnectPacket();
 	}
 	
 	private void createJoinGame() {
@@ -69,6 +72,10 @@ public class PacketCache {
 		float flySpeed = Sagittarius.getInstance().getConfig().getFlySpeed();
 		float movementSpeed = 0.1F;
 		playerAbilities = new PacketContainer(new ServerPlayerAbilitiesPacket(flags, flySpeed, movementSpeed));
+	}
+	
+	private void createConnectPacket() {
+		connectPacket = new PacketContainer(new ServerPluginMessagePacket("BungeeCord", Sagittarius.getInstance().getConfig().getConnectPayload()));
 	}
 	
 }

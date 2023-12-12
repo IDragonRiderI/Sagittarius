@@ -1,5 +1,9 @@
 package de.spacepotato.sagittarius.config;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.nio.file.Files;
 import java.util.Optional;
 
 import de.spacepotato.sagittarius.GameMode;
@@ -7,7 +11,9 @@ import de.spacepotato.sagittarius.world.Biome;
 import de.spacepotato.sagittarius.world.Difficulty;
 import de.spacepotato.sagittarius.world.Dimension;
 import de.spacepotato.sagittarius.world.Location;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SagittariusConfig implements LimboConfig {
 
 	private TomlConfigurationFile tomlConfig;
@@ -17,6 +23,8 @@ public class SagittariusConfig implements LimboConfig {
 	private Difficulty difficulty;
 	private Biome biome;
 	private Dimension dimension;
+	private double moveThresholdSquared;
+	private byte[] connectPayload;
 	
 	public SagittariusConfig() {
 		reload();
@@ -30,6 +38,28 @@ public class SagittariusConfig implements LimboConfig {
 		biome = Biome.valueOf(tomlConfig.getWorld().getBiome().toUpperCase());
 		difficulty = Difficulty.valueOf(tomlConfig.getWorld().getDifficulty().toUpperCase());
 		dimension = Dimension.valueOf(tomlConfig.getWorld().getDimension().toUpperCase());
+		moveThresholdSquared = Math.pow(getMoveThreshold(), 2);
+		
+		if (tomlConfig.getConnect().getConnectType().equalsIgnoreCase("string")) {
+			try (ByteArrayOutputStream out = new ByteArrayOutputStream(); DataOutputStream dos = new DataOutputStream(out)) {
+				for (String s : tomlConfig.getConnect().getConnectPayloadString()) {
+					dos.writeUTF(s);
+				}
+				connectPayload = out.toByteArray();
+			} catch(Exception ex) {
+				log.error("Could not create plugin message from string! ", ex);
+			}
+		} else if(tomlConfig.getConnect().getConnectType().startsWith("file:")) {
+			String fileName = tomlConfig.getConnect().getConnectType().substring("file:".length());
+			File file = new File(fileName);
+			try {
+				connectPayload = Files.readAllBytes(file.toPath());
+			} catch(Exception ex) {
+				log.error("Could not create plugin message from file! ", ex);
+			}
+		} else {
+			log.warn("No valid connect type found: " + tomlConfig.getConnect().getConnectType());
+		}
 	}
 	
 	@Override
@@ -110,6 +140,46 @@ public class SagittariusConfig implements LimboConfig {
 	@Override
 	public Biome getBiome() {
 		return biome;
+	}
+
+	@Override
+	public boolean shouldConnectOnMove() {
+		return tomlConfig.getConnect().isConnectOnMove();
+	}
+
+	@Override
+	public double getMoveThreshold() {
+		return tomlConfig.getConnect().getMoveThreshold();
+	}
+
+	@Override
+	public double getMoveThresholdSquared() {
+		return moveThresholdSquared;
+	}
+
+	@Override
+	public boolean shouldConnectOnRotate() {
+		return tomlConfig.getConnect().isConnectOnRotate();
+	}
+
+	@Override
+	public double getRotateThreshold() {
+		return tomlConfig.getConnect().getRotateThreshold();
+	}
+
+	@Override
+	public long getCheckDelayAfterJoin() {
+		return tomlConfig.getConnect().getDelayAfterJoin();
+	}
+
+	@Override
+	public long getCheckDelayBetweenAttempts() {
+		return tomlConfig.getConnect().getDelayBetweenAttempts();
+	}
+
+	@Override
+	public byte[] getConnectPayload() {
+		return connectPayload;
 	}
 
 }

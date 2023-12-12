@@ -111,4 +111,53 @@ public interface LimboConfig {
 	 */
 	boolean isReducedDebugInfo();
 	
+	/**
+	 * Returns whether players should be connected to the lobby after they move.
+	 * @return Whether moving players should be connected to the lobby.
+	 */
+	boolean shouldConnectOnMove();
+	
+	/**
+	 * Returns the distance that a player must move in one tick before getting connected.
+	 * @return The distance that must be traveled in one tick before getting connected.
+	 */
+	double getMoveThreshold();
+	
+	/**
+	 * Returns the square value of getMoveThreshold().
+	 * @return The square value of getMoveThreshold().
+	 */
+	double getMoveThresholdSquared();
+	
+	/**
+	 * Returns whether rotating players should be connected to the lobby.
+	 * @return true if rotating players should be connected to the lobby.
+	 */
+	boolean shouldConnectOnRotate();
+	
+	/**
+	 * This value defines how much a player must rotate in one tick before getting sent to the lobby.
+	 * @return how much the player must rotate in one tick before getting sent to the lobby.
+	 */
+	double getRotateThreshold();
+	
+	/**
+	 * This value defines the amount of ticks that must pass before a player can be considered "moving".
+	 * If the spawn point is placed mid-air this might prevent the player from being connected while falling.
+	 * @return The amount of ticks before players may be sent to the lobby.
+	 */
+	long getCheckDelayAfterJoin();
+
+	/**
+	 * If the attempt to send the player to the lobby fails, the Limbo will wait for this amount of ticks until it
+	 * reattempts to send this player.
+	 * @return The amount of ticks between connection attempts.
+	 */
+	long getCheckDelayBetweenAttempts();
+	
+	/**
+	 * Returns the payload that will be sent to connect the player to the lobby.
+	 * @return The payload that will be sent in the plugin message.
+	 */
+	byte[] getConnectPayload();
 }
