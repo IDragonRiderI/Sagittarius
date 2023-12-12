@@ -17,6 +17,7 @@ import de.spacepotato.sagittarius.network.protocol.play.ServerKeepAlivePacket;
 import de.spacepotato.sagittarius.scheduler.SagittariusScheduler;
 import de.spacepotato.sagittarius.scheduler.ScheduledTask;
 import de.spacepotato.sagittarius.scheduler.Scheduler;
+import de.spacepotato.sagittarius.viaversion.SagittariusViaPlatform;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -109,6 +110,11 @@ public class SagittariusImpl extends Sagittarius {
 		
 		server.setHostAndPort(config.getHost(), config.getPort());
 		server.setNativeNetworking(config.shouldUseNativeNetworking());
+		
+		SagittariusViaPlatform.init();
+		SagittariusViaPlatform.load();
+		SagittariusViaPlatform.finishStartup();
+
 		server.start();
 		
 		keepAliveTask = scheduler.repeat(this::tickKeepAlive, getConfig().getKeepAliveDelay(), getConfig().getKeepAliveDelay());
@@ -135,9 +141,10 @@ public class SagittariusImpl extends Sagittarius {
 		
 		log.info("Stopping scheduler...");
 		scheduler.stopProcessing();
-		
+
 		log.info("Closing socket...");
 		getServer().stop();
+		SagittariusViaPlatform.destroy();
 	}
 	
 	private void tickKeepAlive() {

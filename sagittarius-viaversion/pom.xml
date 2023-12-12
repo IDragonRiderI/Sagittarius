@@ -5,7 +5,17 @@
 		<artifactId>sagittarius-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>sagittarius-limbo</artifactId>
+	<artifactId>sagittarius-viaversion</artifactId>
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>https://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>viaversion-repo</id>
+			<url>https://repo.viaversion.com</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
@@ -18,33 +28,24 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>com.viaversion</groupId>
+			<artifactId>viaversion</artifactId>
+			<version>4.9.1</version>
+		</dependency>
+		<!-- ViaVersion dependencies -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>32.1.3-jre</version>
+		</dependency>
+		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-network</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.carrotsearch</groupId>
-			<artifactId>hppc</artifactId>
-			<version>0.9.1</version>
-		</dependency>
-		<dependency>
-			<groupId>de.spacepotato</groupId>
-			<artifactId>sagittarius-config</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>de.spacepotato</groupId>
-			<artifactId>sagittarius-chat</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>de.spacepotato</groupId>
-			<artifactId>sagittarius-nbt</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>de.spacepotato</groupId>
-			<artifactId>sagittarius-viaversion</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

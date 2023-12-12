@@ -12,6 +12,7 @@
 		<module>sagittarius-nbt</module>
 		<module>sagittarius-log</module>
 		<module>sagittarius-config</module>
+		<module>sagittarius-viaversion</module>
 	</modules>
 	<properties>
 		<maven.compiler.target>1.8</maven.compiler.target>

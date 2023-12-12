@@ -9,11 +9,13 @@ import de.spacepotato.sagittarius.mojang.SkinProperty;
 import de.spacepotato.sagittarius.network.handler.LimboChildHandler;
 import de.spacepotato.sagittarius.network.protocol.Packet;
 import de.spacepotato.sagittarius.network.protocol.PacketContainer;
+import de.spacepotato.sagittarius.network.protocol.PacketReceiver;
 import de.spacepotato.sagittarius.network.protocol.State;
 import de.spacepotato.sagittarius.network.protocol.play.ServerChatMessagePacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerDisconnectPacket;
+import io.netty.buffer.ByteBuf;
 
-public class PlayerImpl implements Player {
+public class PlayerImpl implements Player, PacketReceiver {
 
 	private final LimboChildHandler childHandler;
 	private final GameProfile profile;
@@ -66,6 +68,11 @@ public class PlayerImpl implements Player {
 	
 	public void sendPacket(PacketContainer packet) {
 		childHandler.sendPacket(packet);
+	}
+	
+	@Override
+	public void sendPacket(ByteBuf buf) {
+		childHandler.sendPacket(buf);
 	}
 
 	public int requestKeepAlive(int keepAliveId) {

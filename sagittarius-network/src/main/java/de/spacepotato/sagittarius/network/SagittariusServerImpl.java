@@ -2,6 +2,7 @@ package de.spacepotato.sagittarius.network;
 
 import de.spacepotato.sagittarius.SagittariusServer;
 import de.spacepotato.sagittarius.network.handler.ParentNetworkHandler;
+import de.spacepotato.sagittarius.viaversion.MultiVersionInjector;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -23,6 +24,7 @@ public class SagittariusServerImpl implements SagittariusServer {
 	private int port;
 	private boolean nativeNetworking;
 	private Channel server;
+	private MultiVersionInjector injector;
 	
 	public SagittariusServerImpl(ParentNetworkHandler parentHandler) {
 		this.parentHandler = parentHandler;
@@ -47,7 +49,7 @@ public class SagittariusServerImpl implements SagittariusServer {
 					.group(bossGroup, workerGroup)
 					.channel(epoll ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
 					.childOption(ChannelOption.TCP_NODELAY, true)
-					.childHandler(new ClientConnectionInitializer(parentHandler));			
+					.childHandler(new ClientConnectionInitializer(parentHandler, injector));			
 			
 			server = bootstrap.bind(host, port).addListener(new ChannelFutureListener() {
 				
@@ -92,6 +94,11 @@ public class SagittariusServerImpl implements SagittariusServer {
 	
 	public Channel getServer() {
 		return server;
+	}
+
+	@Override
+	public void setMultiVersionInjector(MultiVersionInjector injector) {
+		this.injector = injector;
 	}
 
 }

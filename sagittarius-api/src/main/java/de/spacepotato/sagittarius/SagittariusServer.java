@@ -1,5 +1,7 @@
 package de.spacepotato.sagittarius;
 
+import de.spacepotato.sagittarius.viaversion.MultiVersionInjector;
+
 public interface SagittariusServer {
 
 	/**
@@ -29,4 +31,11 @@ public interface SagittariusServer {
 	 * @param port The desired port. 25565 is the default Minecraft port.
 	 */
 	void setHostAndPort(String host, int port);
+	
+	/**
+	 * Sets an injector which handles multi-version support.
+	 * @param injector The multi-version injector.
+	 */
+	void setMultiVersionInjector(MultiVersionInjector injector);
+	
 }

@@ -29,6 +29,7 @@ import de.spacepotato.sagittarius.network.protocol.play.ServerPlayerListItemPack
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
 import de.spacepotato.sagittarius.util.PlayerMovementTracker;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 
 public class LimboChildHandler extends ChildNetworkHandler {
@@ -48,7 +49,11 @@ public class LimboChildHandler extends ChildNetworkHandler {
 	}
 	
 	public void sendPacket(PacketContainer container) {
-		container.send(channel);
+		channel.writeAndFlush(container);
+	}
+	
+	public void sendPacket(ByteBuf buf) {
+		channel.writeAndFlush(buf);
 	}
 
 	public int requestKeepAlive(int keepAliveId) {

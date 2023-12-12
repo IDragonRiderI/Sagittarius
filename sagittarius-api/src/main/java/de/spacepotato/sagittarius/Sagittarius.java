@@ -48,4 +48,15 @@ public abstract class Sagittarius {
 	 */
 	public abstract List<Player> getPlayers();
 	
+	/**
+	 * Returns the name of the limbo server. This will be "Sagittarius".
+	 * @return The name of the limbo server.
+	 */
+	public abstract String getName();
+	
+	/**
+	 * Returns the current version of the limbo server.
+	 * @return The version of the limbo server.
+	 */
+	public abstract String getVersion();
 }
