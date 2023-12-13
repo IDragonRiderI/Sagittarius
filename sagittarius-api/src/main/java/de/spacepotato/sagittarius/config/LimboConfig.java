@@ -1,12 +1,12 @@
 package de.spacepotato.sagittarius.config;
 
-import java.util.Optional;
-
 import de.spacepotato.sagittarius.GameMode;
 import de.spacepotato.sagittarius.world.Biome;
 import de.spacepotato.sagittarius.world.Difficulty;
 import de.spacepotato.sagittarius.world.Dimension;
 import de.spacepotato.sagittarius.world.Location;
+
+import java.util.Optional;
 
 public interface LimboConfig {
 

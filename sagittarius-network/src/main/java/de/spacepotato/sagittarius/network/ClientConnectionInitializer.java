@@ -1,7 +1,5 @@
 package de.spacepotato.sagittarius.network;
 
-import java.util.concurrent.TimeUnit;
-
 import de.spacepotato.sagittarius.network.handler.ChildNetworkHandler;
 import de.spacepotato.sagittarius.network.handler.ParentNetworkHandler;
 import de.spacepotato.sagittarius.network.protocol.PacketEncoder;
@@ -13,6 +11,8 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.timeout.ReadTimeoutHandler;
+
+import java.util.concurrent.TimeUnit;
 
 public class ClientConnectionInitializer extends ChannelInitializer<SocketChannel> {
 

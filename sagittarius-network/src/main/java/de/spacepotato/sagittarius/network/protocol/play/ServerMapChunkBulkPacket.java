@@ -1,13 +1,13 @@
 package de.spacepotato.sagittarius.network.protocol.play;
 
-import java.util.List;
-
 import de.spacepotato.sagittarius.network.protocol.Packet;
 import de.spacepotato.sagittarius.world.Chunk;
 import io.netty.buffer.ByteBuf;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor

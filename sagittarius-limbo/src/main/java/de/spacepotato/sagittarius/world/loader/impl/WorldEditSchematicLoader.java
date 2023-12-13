@@ -1,20 +1,7 @@
 package de.spacepotato.sagittarius.world.loader.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.nio.file.Files;
-import java.util.List;
-import java.util.zip.GZIPInputStream;
-
 import de.spacepotato.sagittarius.Sagittarius;
-import de.spacepotato.sagittarius.nbt.NBT;
-import de.spacepotato.sagittarius.nbt.NBTInputStream;
-import de.spacepotato.sagittarius.nbt.NBTTagByteArray;
-import de.spacepotato.sagittarius.nbt.NBTTagCompound;
-import de.spacepotato.sagittarius.nbt.NBTTagInt;
-import de.spacepotato.sagittarius.nbt.NBTTagList;
-import de.spacepotato.sagittarius.nbt.NBTTagShort;
-import de.spacepotato.sagittarius.nbt.NBTTagString;
+import de.spacepotato.sagittarius.nbt.*;
 import de.spacepotato.sagittarius.world.BlockPosition;
 import de.spacepotato.sagittarius.world.Location;
 import de.spacepotato.sagittarius.world.WorldImpl;
@@ -22,6 +9,11 @@ import de.spacepotato.sagittarius.world.loader.WorldLoader;
 import de.spacepotato.sagittarius.world.metadata.SignMetadata;
 import de.spacepotato.sagittarius.world.metadata.SkullMetadata;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.util.List;
+import java.util.zip.GZIPInputStream;
 
 @Slf4j
 public class WorldEditSchematicLoader implements WorldLoader {

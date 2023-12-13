@@ -1,8 +1,5 @@
 package de.spacepotato.sagittarius.entity;
 
-import java.util.Optional;
-import java.util.UUID;
-
 import de.spacepotato.sagittarius.chat.ChatComponent;
 import de.spacepotato.sagittarius.mojang.GameProfile;
 import de.spacepotato.sagittarius.mojang.SkinProperty;
@@ -15,6 +12,9 @@ import de.spacepotato.sagittarius.network.protocol.play.ServerChatMessagePacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerDisconnectPacket;
 import io.netty.buffer.ByteBuf;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class PlayerImpl implements Player, PacketReceiver {

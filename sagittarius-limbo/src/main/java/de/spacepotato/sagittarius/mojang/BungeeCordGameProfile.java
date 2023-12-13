@@ -1,12 +1,11 @@
 package de.spacepotato.sagittarius.mojang;
 
-import java.util.Optional;
-import java.util.UUID;
-
 import com.google.gson.Gson;
-
 import de.spacepotato.sagittarius.network.protocol.handshake.ClientHandshakePacket;
 import de.spacepotato.sagittarius.util.UUIDUtil;
+
+import java.util.Optional;
+import java.util.UUID;
 
 public class BungeeCordGameProfile implements GameProfile {
 

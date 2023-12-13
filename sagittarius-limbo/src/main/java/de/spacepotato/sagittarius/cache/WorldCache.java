@@ -1,10 +1,6 @@
 package de.spacepotato.sagittarius.cache;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.carrotsearch.hppc.cursors.ObjectCursor;
-
 import de.spacepotato.sagittarius.Sagittarius;
 import de.spacepotato.sagittarius.entity.PlayerImpl;
 import de.spacepotato.sagittarius.network.protocol.PacketContainer;
@@ -13,11 +9,14 @@ import de.spacepotato.sagittarius.world.Chunk;
 import de.spacepotato.sagittarius.world.ChunkImpl;
 import de.spacepotato.sagittarius.world.Dimension;
 import de.spacepotato.sagittarius.world.WorldImpl;
+import de.spacepotato.sagittarius.world.loader.WorldLoader;
 import de.spacepotato.sagittarius.world.loader.impl.BlankWorldLoader;
 import de.spacepotato.sagittarius.world.loader.impl.WorldEditSchematicLoader;
-import de.spacepotato.sagittarius.world.loader.impl.WorldLoader;
 import de.spacepotato.sagittarius.world.metadata.BlockMetadata;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class WorldCache {

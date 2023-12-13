@@ -1,9 +1,9 @@
 package de.spacepotato.sagittarius.entity;
 
+import de.spacepotato.sagittarius.mojang.SkinProperty;
+
 import java.util.Optional;
 import java.util.UUID;
-
-import de.spacepotato.sagittarius.mojang.SkinProperty;
 
 public interface Player extends Entity {
 

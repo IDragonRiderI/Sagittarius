@@ -1,12 +1,12 @@
 package de.spacepotato.sagittarius.chat;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.spacepotato.sagittarius.chat.json.ComponentSerializer;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Tolerate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter

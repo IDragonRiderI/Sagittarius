@@ -6,11 +6,7 @@ import de.spacepotato.sagittarius.network.protocol.handshake.ClientHandshakePack
 import de.spacepotato.sagittarius.network.protocol.login.ClientLoginStartPacket;
 import de.spacepotato.sagittarius.network.protocol.mappings.PacketMappings;
 import de.spacepotato.sagittarius.network.protocol.mappings.PacketRegistry;
-import de.spacepotato.sagittarius.network.protocol.play.ClientKeepAlivePacket;
-import de.spacepotato.sagittarius.network.protocol.play.ClientLookPacket;
-import de.spacepotato.sagittarius.network.protocol.play.ClientPositionLookPacket;
-import de.spacepotato.sagittarius.network.protocol.play.ClientPositionPacket;
-import de.spacepotato.sagittarius.network.protocol.play.ClientSettingsPacket;
+import de.spacepotato.sagittarius.network.protocol.play.*;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
 import io.netty.channel.Channel;

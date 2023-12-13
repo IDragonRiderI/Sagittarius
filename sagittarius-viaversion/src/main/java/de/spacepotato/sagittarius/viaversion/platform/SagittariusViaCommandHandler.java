@@ -1,11 +1,11 @@
 package de.spacepotato.sagittarius.viaversion.platform;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.viaversion.viaversion.api.command.ViaCommandSender;
 import com.viaversion.viaversion.api.command.ViaSubCommand;
 import com.viaversion.viaversion.commands.ViaCommandHandler;
+
+import java.util.Collections;
+import java.util.List;
 
 public class SagittariusViaCommandHandler extends ViaCommandHandler {
 

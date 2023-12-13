@@ -1,18 +1,14 @@
 package de.spacepotato.sagittarius.network.protocol.mappings;
 
-import java.util.HashMap;
-
 import de.spacepotato.sagittarius.network.protocol.Packet;
 import de.spacepotato.sagittarius.network.protocol.State;
 import de.spacepotato.sagittarius.network.protocol.handshake.ClientHandshakePacket;
 import de.spacepotato.sagittarius.network.protocol.login.ClientLoginStartPacket;
-import de.spacepotato.sagittarius.network.protocol.play.ClientKeepAlivePacket;
-import de.spacepotato.sagittarius.network.protocol.play.ClientLookPacket;
-import de.spacepotato.sagittarius.network.protocol.play.ClientPositionLookPacket;
-import de.spacepotato.sagittarius.network.protocol.play.ClientPositionPacket;
-import de.spacepotato.sagittarius.network.protocol.play.ClientSettingsPacket;
+import de.spacepotato.sagittarius.network.protocol.play.*;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusPingPacket;
 import de.spacepotato.sagittarius.network.protocol.status.ClientStatusRequestPacket;
+
+import java.util.HashMap;
 
 public class PacketRegistry {
 

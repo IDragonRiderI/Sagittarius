@@ -1,12 +1,12 @@
 package de.spacepotato.sagittarius.nbt;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

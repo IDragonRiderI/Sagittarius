@@ -1,7 +1,6 @@
 package de.spacepotato.sagittarius.viaversion.platform;
 
 import com.viaversion.viaversion.ViaAPIBase;
-
 import de.spacepotato.sagittarius.entity.Player;
 import de.spacepotato.sagittarius.network.protocol.PacketReceiver;
 import io.netty.buffer.ByteBuf;

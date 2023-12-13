@@ -1,11 +1,11 @@
 package de.spacepotato.sagittarius;
 
-import java.util.List;
-
 import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.entity.Player;
 import de.spacepotato.sagittarius.scheduler.Scheduler;
 import lombok.Getter;
+
+import java.util.List;
 
 public abstract class Sagittarius {
 

@@ -1,11 +1,10 @@
 package de.spacepotato.sagittarius.viaversion.platform;
 
-import java.util.UUID;
-
 import com.viaversion.viaversion.api.command.ViaCommandSender;
-
 import de.spacepotato.sagittarius.entity.Player;
 import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class SagittariusCommandSender implements ViaCommandSender {

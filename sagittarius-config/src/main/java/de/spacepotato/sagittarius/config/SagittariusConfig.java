@@ -1,17 +1,17 @@
 package de.spacepotato.sagittarius.config;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.nio.file.Files;
-import java.util.Optional;
-
 import de.spacepotato.sagittarius.GameMode;
 import de.spacepotato.sagittarius.world.Biome;
 import de.spacepotato.sagittarius.world.Difficulty;
 import de.spacepotato.sagittarius.world.Dimension;
 import de.spacepotato.sagittarius.world.Location;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.nio.file.Files;
+import java.util.Optional;
 
 @Slf4j
 public class SagittariusConfig implements LimboConfig {

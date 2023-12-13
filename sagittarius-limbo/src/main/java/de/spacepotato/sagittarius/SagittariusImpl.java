@@ -1,10 +1,5 @@
 package de.spacepotato.sagittarius;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import de.spacepotato.sagittarius.cache.PacketCache;
 import de.spacepotato.sagittarius.cache.WorldCache;
 import de.spacepotato.sagittarius.chat.ChatComponent;
@@ -23,6 +18,11 @@ import de.spacepotato.sagittarius.scheduler.Scheduler;
 import de.spacepotato.sagittarius.viaversion.SagittariusViaPlatform;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 @Slf4j
 public class SagittariusImpl extends Sagittarius {

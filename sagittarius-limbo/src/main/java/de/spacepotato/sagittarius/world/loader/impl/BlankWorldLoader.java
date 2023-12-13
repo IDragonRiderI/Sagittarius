@@ -1,9 +1,9 @@
 package de.spacepotato.sagittarius.world.loader.impl;
 
-import java.io.File;
-
 import de.spacepotato.sagittarius.world.WorldImpl;
 import de.spacepotato.sagittarius.world.loader.WorldLoader;
+
+import java.io.File;
 
 public class BlankWorldLoader implements WorldLoader {
 

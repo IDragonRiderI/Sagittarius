@@ -1,11 +1,11 @@
 package de.spacepotato.sagittarius.viaversion.platform;
 
+import com.viaversion.viaversion.configuration.AbstractViaConfig;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import com.viaversion.viaversion.configuration.AbstractViaConfig;
 
 public class SagittariusViaConfig extends AbstractViaConfig {
 

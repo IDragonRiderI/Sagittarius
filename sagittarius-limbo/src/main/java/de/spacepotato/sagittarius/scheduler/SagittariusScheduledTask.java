@@ -1,9 +1,9 @@
 package de.spacepotato.sagittarius.scheduler;
 
-import java.util.concurrent.ExecutorService;
-
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.ExecutorService;
 
 @Slf4j
 public class SagittariusScheduledTask implements ScheduledTask {

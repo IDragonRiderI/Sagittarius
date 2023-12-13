@@ -6,7 +6,6 @@ import com.viaversion.viaversion.exception.CancelEncoderException;
 import com.viaversion.viaversion.handlers.ChannelHandlerContextWrapper;
 import com.viaversion.viaversion.handlers.ViaCodecHandler;
 import com.viaversion.viaversion.util.PipelineUtil;
-
 import de.spacepotato.sagittarius.network.protocol.Packet;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

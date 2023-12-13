@@ -1,9 +1,5 @@
 package de.spacepotato.sagittarius.viaversion;
 
-import java.io.File;
-import java.util.UUID;
-import java.util.logging.Logger;
-
 import com.viaversion.viaversion.ViaManagerImpl;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
@@ -11,17 +7,14 @@ import com.viaversion.viaversion.api.command.ViaCommandSender;
 import com.viaversion.viaversion.api.configuration.ViaVersionConfig;
 import com.viaversion.viaversion.api.platform.ViaPlatform;
 import com.viaversion.viaversion.libs.gson.JsonObject;
-
 import de.spacepotato.sagittarius.Sagittarius;
 import de.spacepotato.sagittarius.entity.Player;
 import de.spacepotato.sagittarius.log.JULLoggerBridge;
-import de.spacepotato.sagittarius.viaversion.platform.SagittariusCommandSender;
-import de.spacepotato.sagittarius.viaversion.platform.SagittariusPlatformTask;
-import de.spacepotato.sagittarius.viaversion.platform.SagittariusViaApi;
-import de.spacepotato.sagittarius.viaversion.platform.SagittariusViaCommandHandler;
-import de.spacepotato.sagittarius.viaversion.platform.SagittariusViaConfig;
-import de.spacepotato.sagittarius.viaversion.platform.SagittariusViaInjector;
-import de.spacepotato.sagittarius.viaversion.platform.SagittariusViaLoader;
+import de.spacepotato.sagittarius.viaversion.platform.*;
+
+import java.io.File;
+import java.util.UUID;
+import java.util.logging.Logger;
 
 
 public class SagittariusViaPlatform implements ViaPlatform<Player>{

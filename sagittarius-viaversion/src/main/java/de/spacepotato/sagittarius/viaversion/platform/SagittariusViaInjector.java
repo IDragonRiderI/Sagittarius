@@ -6,7 +6,6 @@ import com.viaversion.viaversion.api.platform.ViaInjector;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
 import com.viaversion.viaversion.libs.gson.JsonObject;
 import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
-
 import de.spacepotato.sagittarius.Sagittarius;
 import de.spacepotato.sagittarius.viaversion.MultiVersionInjector;
 import io.netty.channel.Channel;

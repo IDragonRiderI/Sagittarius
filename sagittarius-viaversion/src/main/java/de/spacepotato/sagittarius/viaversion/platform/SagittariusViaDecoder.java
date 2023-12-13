@@ -1,15 +1,14 @@
 package de.spacepotato.sagittarius.viaversion.platform;
 
-import java.util.List;
-
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.exception.CancelDecoderException;
 import com.viaversion.viaversion.util.PipelineUtil;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class SagittariusViaDecoder extends ByteToMessageDecoder {

@@ -1,14 +1,13 @@
 package de.spacepotato.sagittarius.world;
 
+import com.carrotsearch.hppc.LongObjectHashMap;
+import com.carrotsearch.hppc.cursors.ObjectCursor;
+import de.spacepotato.sagittarius.world.metadata.BlockMetadata;
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.carrotsearch.hppc.LongObjectHashMap;
-import com.carrotsearch.hppc.cursors.ObjectCursor;
-
-import de.spacepotato.sagittarius.world.metadata.BlockMetadata;
-import lombok.Getter;
 
 @Getter
 public class WorldImpl implements World {

@@ -1,9 +1,5 @@
 package de.spacepotato.sagittarius.network.protocol;
 
-import java.io.DataOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-
 import de.spacepotato.sagittarius.nbt.NBT;
 import de.spacepotato.sagittarius.nbt.NBTOutputStream;
 import de.spacepotato.sagittarius.network.handler.ChildNetworkHandler;
@@ -11,6 +7,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.DataOutputStream;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public abstract class Packet {

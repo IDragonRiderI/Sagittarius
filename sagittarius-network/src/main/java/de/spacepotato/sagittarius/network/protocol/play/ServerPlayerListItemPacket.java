@@ -1,8 +1,5 @@
 package de.spacepotato.sagittarius.network.protocol.play;
 
-import java.util.List;
-import java.util.UUID;
-
 import de.spacepotato.sagittarius.mojang.SkinProperty;
 import de.spacepotato.sagittarius.network.protocol.Packet;
 import io.netty.buffer.ByteBuf;
@@ -10,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor

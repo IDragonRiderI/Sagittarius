@@ -1,8 +1,8 @@
 package de.spacepotato.sagittarius.world.loader;
 
-import java.io.File;
-
 import de.spacepotato.sagittarius.world.WorldImpl;
+
+import java.io.File;
 
 public interface WorldLoader {
 
