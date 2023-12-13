@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 
+import de.spacepotato.sagittarius.Sagittarius;
 import de.spacepotato.sagittarius.entity.PlayerImpl;
 import de.spacepotato.sagittarius.network.protocol.PacketContainer;
 import de.spacepotato.sagittarius.network.protocol.play.ServerMapChunkBulkPacket;
@@ -38,6 +39,8 @@ public class WorldCache {
 				break;
 			}
 		}
+		
+		world.applyBiome(Sagittarius.getInstance().getConfig().getBiome());
 		
 		List<PacketContainer> worldPackets = new ArrayList<>();
 		
