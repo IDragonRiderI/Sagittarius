@@ -90,7 +90,7 @@ public class SagittariusViaPlatform implements ViaPlatform<Player>{
 
 	@Override
 	public String getPluginVersion() {
-		return "4.9.1";
+		return "4.9.2";
 	}
 
 	@Override
