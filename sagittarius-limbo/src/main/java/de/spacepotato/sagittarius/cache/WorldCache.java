@@ -40,7 +40,7 @@ public class WorldCache {
 				break;
 			}
 		}
-		
+		world.expand();
 		world.applyBiome(Sagittarius.getInstance().getConfig().getBiome());
 		
 		List<PacketContainer> worldPackets = new ArrayList<>();

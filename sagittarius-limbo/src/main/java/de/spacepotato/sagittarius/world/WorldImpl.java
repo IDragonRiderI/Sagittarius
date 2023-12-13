@@ -19,6 +19,30 @@ public class WorldImpl implements World {
 		chunks = new LongObjectHashMap<>();
 		metadata = new ArrayList<>();
 	}
+	
+	public void expand() {
+		// Fix some weird chunk glitches by slightly expanding the world.
+		int minX = 0;
+		int maxX = 0;
+		int minZ = 0;
+		int maxZ = 0;
+		for (ObjectCursor<ChunkImpl> chunkCursor : chunks.values()) {
+			Chunk chunk = chunkCursor.value;
+			minX = Math.min(minX, chunk.getX());
+			maxX = Math.max(maxX, chunk.getX());
+			minZ = Math.min(minZ, chunk.getZ());
+			maxZ = Math.max(maxZ, chunk.getZ());
+		}
+		
+		for (int x = minX - 2; x <= maxX + 2; x++) {
+			for (int z = minZ - 2; z <= maxZ + 2; z++) {
+				long id = getId(x, z);
+				if (!chunks.containsKey(id)) {
+					chunks.put(id, new ChunkImpl(x, z));
+				}				
+			}
+		}
+	}
 
 	public ChunkImpl getChunk(int x, int z) {
 		int chunkX = (int)Math.floor(x / 16D);
@@ -31,7 +55,7 @@ public class WorldImpl implements World {
 		}
 		return c;
 	}
-	
+
 	public ChunkImpl getChunkByChunkPosition(int x, int z) {
 		long id = getId(x, z);
 		ChunkImpl c = chunks.get(id);
