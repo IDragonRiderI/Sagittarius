@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>de.spacepotato</groupId>
 		<artifactId>sagittarius-parent</artifactId>
-		<version>1.0.0</version>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>sagittarius-viaversion</artifactId>
 	<repositories>
@@ -20,17 +20,17 @@
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-network</artifactId>
-			<version>1.0.0</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-api</artifactId>
-			<version>1.0.0</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-log</artifactId>
-			<version>1.0.0</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.viaversion</groupId>
@@ -48,5 +48,6 @@
 			<artifactId>guava</artifactId>
 			<version>32.1.3-jre</version>
 		</dependency>
+
 	</dependencies>
 </project>

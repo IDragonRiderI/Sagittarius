@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.spacepotato</groupId>
     <artifactId>sagittarius-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
   </parent>
   <artifactId>sagittarius-nbt</artifactId>
 </project>

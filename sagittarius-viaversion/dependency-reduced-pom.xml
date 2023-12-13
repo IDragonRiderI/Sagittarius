@@ -6,7 +6,17 @@
     <version>1.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>sagittarius-chat</artifactId>
+  <artifactId>sagittarius-viaversion</artifactId>
+  <repositories>
+    <repository>
+      <id>central</id>
+      <url>https://repo1.maven.org/maven2/</url>
+    </repository>
+    <repository>
+      <id>viaversion-repo</id>
+      <url>https://repo.viaversion.com</url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>org.projectlombok</groupId>
