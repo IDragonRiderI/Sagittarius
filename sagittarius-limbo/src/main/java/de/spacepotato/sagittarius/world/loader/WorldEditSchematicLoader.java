@@ -69,6 +69,8 @@ public class WorldEditSchematicLoader implements WorldLoader {
 							
 							blockId = (short) (additionalData + (blocks[index] & 0xFF));
 						}
+						
+						if (blockId == 0) continue;
 						world.setTypeIdAndData(x + offsetX + worldOffsetX, y + offsetY + worldOffsetY, z + offsetZ + worldOffsetZ, blockId, data);
 					}
 				}

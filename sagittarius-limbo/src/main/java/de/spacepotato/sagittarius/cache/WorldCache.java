@@ -11,6 +11,7 @@ import de.spacepotato.sagittarius.network.protocol.PacketContainer;
 import de.spacepotato.sagittarius.network.protocol.play.ServerMapChunkBulkPacket;
 import de.spacepotato.sagittarius.world.Chunk;
 import de.spacepotato.sagittarius.world.ChunkImpl;
+import de.spacepotato.sagittarius.world.Dimension;
 import de.spacepotato.sagittarius.world.WorldImpl;
 import de.spacepotato.sagittarius.world.loader.BlankWorldLoader;
 import de.spacepotato.sagittarius.world.loader.WorldEditSchematicLoader;
@@ -49,13 +50,15 @@ public class WorldCache {
 			chunks.add(c.value);
 		}
 		
+		boolean skylight = Sagittarius.getInstance().getConfig().getDimension() == Dimension.OVERWORLD;
+		
 		// We try to send as few packets as possible.
 		// if we do end up with a packet that is too big, then we're sending the next chunks in a separate packet.
 		List<Integer> breaks = new ArrayList<>();
 		int totalSize = 0;
 		for (int i = 0; i < chunks.size(); i++) {
 			Chunk chunk = chunks.get(i);
-			totalSize += chunk.getSizeEstimate((short) chunk.calculatePrimaryBitMask(), true, true);
+			totalSize += chunk.getSizeEstimate((short) chunk.calculatePrimaryBitMask(), skylight, true);
 			if (totalSize > 1_900_000) {
 				breaks.add(i);
 				totalSize = 0;
@@ -75,7 +78,7 @@ public class WorldCache {
 		}
 		
 		splitted.forEach(batch -> {
-			ServerMapChunkBulkPacket packet = new ServerMapChunkBulkPacket(true, batch);
+			ServerMapChunkBulkPacket packet = new ServerMapChunkBulkPacket(skylight, batch);
 			worldPackets.add(new PacketContainer(packet));			
 		});
 		

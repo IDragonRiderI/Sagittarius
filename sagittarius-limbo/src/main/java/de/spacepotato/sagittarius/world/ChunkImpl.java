@@ -20,9 +20,10 @@ public class ChunkImpl implements Chunk {
 	
 	public int calculatePrimaryBitMask() {
 		int bitmask = 0;
-		// TODO: Proper calculation required.
-		// This check always yields the same results as chunks.length will always be 16.
 		for(int i = 0; i < chunks.length; i++) {
+			if (chunks[i] == null) {
+				continue;
+			}
 			bitmask |= (1 << i);
 		}
 		return bitmask;
@@ -47,7 +48,7 @@ public class ChunkImpl implements Chunk {
 	}
 	
 	public byte[] encode(short bitmask, boolean skyLight, boolean full) {
-		ChunkSection[] sections = new ChunkSection[full ? 16 : Integer.bitCount(bitmask)];
+		ChunkSection[] sections = new ChunkSection[Integer.bitCount(bitmask)];
 		// Include all the sections we want to send
 		int sectionNumber = 0;
 		for(int i = 0; i < chunks.length; i++) {
@@ -117,7 +118,7 @@ public class ChunkImpl implements Chunk {
 
 	@Override
 	public int getSizeEstimate(short bitmask, boolean skyLight, boolean full) {
-		int sections = full ? 16 : Integer.bitCount(bitmask);
+		int sections = Integer.bitCount(bitmask);
 		int blocks = 16*16*16*sections;
 
 		return blocks * 2 + (skyLight ? blocks : blocks/2) + (full ? 256 : 0);
