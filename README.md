@@ -24,5 +24,5 @@ It is recommended to start with slightly higher values and only decrease it if a
 ## Closing Notes
 Special thanks to:
 - [ViaVersion](https://github.com/ViaVersion/ViaVersion) for making their work on multi-version support accessible under the GPL license so that others can benefit from it as well.
-- [wiki.vg]([wiki.vg](https://wiki.vg/Main_Page)) for sharing their resource on the Minecraft protocol.
+- [wiki.vg](https://wiki.vg/Main_Page) for sharing their resource on the Minecraft protocol.
 - MrKavatch for playing a major role in the realization of this project.
