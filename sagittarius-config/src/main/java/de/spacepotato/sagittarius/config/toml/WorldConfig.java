@@ -1,4 +1,4 @@
-package de.spacepotato.sagittarius.config;
+package de.spacepotato.sagittarius.config.toml;
 
 import lombok.Data;
 

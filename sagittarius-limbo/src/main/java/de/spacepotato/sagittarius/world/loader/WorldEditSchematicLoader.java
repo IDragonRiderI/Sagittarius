@@ -60,11 +60,10 @@ public class WorldEditSchematicLoader implements WorldLoader {
 							blockId = (short) (blocks[index] & 0xFF);
 						} else {
 							int additionalData = 0;
-							// Even numbers are in the high nibble
 							if (index % 2 == 0) {
-								additionalData = ((addBlocks[index >> 1] & 0x0F) << 8);
+								additionalData = ((addBlocks[index / 2] & 0x0F) << 8);
 							} else {
-								additionalData = ((addBlocks[index >> 1] & 0xF0) << 4);
+								additionalData = ((addBlocks[index / 2] & 0xF0) << 4);
 							}
 							
 							blockId = (short) (additionalData + (blocks[index] & 0xFF));

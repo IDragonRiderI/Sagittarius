@@ -182,4 +182,44 @@ public class SagittariusConfig implements LimboConfig {
 		return connectPayload;
 	}
 
+	@Override
+	public boolean shouldSendJoinMessage() {
+		return tomlConfig.getMessages().isSendJoinMessage();
+	}
+
+	@Override
+	public String getJoinMessage() {
+		return tomlConfig.getMessages().getJoinMessage();
+	}
+
+	@Override
+	public boolean shouldSendActionbar() {
+		return tomlConfig.getMessages().isSendActionbar();
+	}
+
+	@Override
+	public String getActionbarMessage() {
+		return tomlConfig.getMessages().getActionbarMessage();
+	}
+
+	@Override
+	public int getActionbarIntervalTicks() {
+		return tomlConfig.getMessages().getActionbarIntervalTicks();
+	}
+
+	@Override
+	public boolean shouldSendBroadcasts() {
+		return tomlConfig.getMessages().isSendBroadcast();
+	}
+
+	@Override
+	public String getBroadcastMessage() {
+		return tomlConfig.getMessages().getBroadcastMessage();
+	}
+
+	@Override
+	public int getBroadcastIntervalTicks() {
+		return tomlConfig.getMessages().getBroadcastIntervalTicks();
+	}
+
 }

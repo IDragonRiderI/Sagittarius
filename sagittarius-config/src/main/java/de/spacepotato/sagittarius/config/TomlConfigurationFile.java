@@ -8,6 +8,12 @@ import java.nio.file.StandardCopyOption;
 
 import com.moandjiezana.toml.Toml;
 
+import de.spacepotato.sagittarius.config.toml.ConnectConfig;
+import de.spacepotato.sagittarius.config.toml.InternalConfig;
+import de.spacepotato.sagittarius.config.toml.MessagesConfig;
+import de.spacepotato.sagittarius.config.toml.NetworkConfig;
+import de.spacepotato.sagittarius.config.toml.PlayerConfig;
+import de.spacepotato.sagittarius.config.toml.WorldConfig;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,5 +44,6 @@ public class TomlConfigurationFile {
 	private InternalConfig internal;
 	private WorldConfig world;
 	private ConnectConfig connect;
+	private MessagesConfig messages;
 	
 }

@@ -7,12 +7,15 @@ import java.util.Random;
 
 import de.spacepotato.sagittarius.cache.PacketCache;
 import de.spacepotato.sagittarius.cache.WorldCache;
+import de.spacepotato.sagittarius.chat.ChatComponent;
 import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.config.SagittariusConfig;
 import de.spacepotato.sagittarius.entity.Player;
 import de.spacepotato.sagittarius.entity.PlayerImpl;
 import de.spacepotato.sagittarius.network.SagittariusServerImpl;
 import de.spacepotato.sagittarius.network.handler.LimboParentHandler;
+import de.spacepotato.sagittarius.network.protocol.PacketContainer;
+import de.spacepotato.sagittarius.network.protocol.play.ServerChatMessagePacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerKeepAlivePacket;
 import de.spacepotato.sagittarius.scheduler.SagittariusScheduler;
 import de.spacepotato.sagittarius.scheduler.ScheduledTask;
@@ -36,6 +39,8 @@ public class SagittariusImpl extends Sagittarius {
 	private final WorldCache worldCache;
 	
 	private ScheduledTask keepAliveTask;
+	private ScheduledTask actionbarTask;
+	private ScheduledTask broadcastTask;
 	
 	public SagittariusImpl() {
 		setInstance(this);
@@ -118,6 +123,13 @@ public class SagittariusImpl extends Sagittarius {
 		server.start();
 		
 		keepAliveTask = scheduler.repeat(this::tickKeepAlive, getConfig().getKeepAliveDelay(), getConfig().getKeepAliveDelay());
+		if (getConfig().shouldSendBroadcasts()) {
+			broadcastTask = scheduler.repeat(this::tickBroadcast, getConfig().getBroadcastIntervalTicks(), getConfig().getBroadcastIntervalTicks());
+		}
+		if (getConfig().shouldSendActionbar()) {
+			actionbarTask = scheduler.repeat(this::tickActionbar, getConfig().getActionbarIntervalTicks(), getConfig().getActionbarIntervalTicks());			
+		}
+		
 		scheduler.startProcessing();
 	}
 	
@@ -134,6 +146,16 @@ public class SagittariusImpl extends Sagittarius {
 		
 		keepAliveTask.cancel();
 		keepAliveTask = scheduler.repeat(this::tickKeepAlive, getConfig().getKeepAliveDelay(), getConfig().getKeepAliveDelay());
+	
+		if (broadcastTask != null) broadcastTask.cancel();
+		if (actionbarTask != null) actionbarTask.cancel();
+		
+		if (getConfig().shouldSendBroadcasts()) {
+			broadcastTask = scheduler.repeat(this::tickBroadcast, getConfig().getBroadcastIntervalTicks(), getConfig().getBroadcastIntervalTicks());
+		}
+		if (getConfig().shouldSendActionbar()) {
+			actionbarTask = scheduler.repeat(this::tickActionbar, getConfig().getActionbarIntervalTicks(), getConfig().getActionbarIntervalTicks());			
+		}
 	}
 	
 	private void shutdown() {
@@ -154,6 +176,7 @@ public class SagittariusImpl extends Sagittarius {
 		List<Player> timeOut = new ArrayList<>();
 		synchronized (players) {
 			ServerKeepAlivePacket packet = new ServerKeepAlivePacket(keepAliveId);
+			PacketContainer container = new PacketContainer(packet);
 			
 			for (Player player : players) {
 				PlayerImpl impl = (PlayerImpl) player;
@@ -163,11 +186,35 @@ public class SagittariusImpl extends Sagittarius {
 					timeOut.add(player);
 					continue;
 				}
-				impl.sendPacket(packet);
+				impl.sendPacket(container);
 			}
 		}
 		for (Player player : timeOut) {
 			player.kick("Timed out.");
+		}
+	}
+	
+	private void tickActionbar() {
+		ChatComponent component = new ChatComponent(getConfig().getActionbarMessage());
+		ServerChatMessagePacket packet = new ServerChatMessagePacket(component.toJson(), (byte) 2);
+		PacketContainer container = new PacketContainer(packet);
+		synchronized (players) {			
+			for (Player player : players) {
+				PlayerImpl impl = (PlayerImpl) player;
+				impl.sendPacket(container);
+			}
+		}
+	}
+	
+	private void tickBroadcast() {
+		ChatComponent component = new ChatComponent(getConfig().getBroadcastMessage());
+		ServerChatMessagePacket packet = new ServerChatMessagePacket(component.toJson(), (byte) 0);
+		PacketContainer container = new PacketContainer(packet);
+		synchronized (players) {			
+			for (Player player : players) {
+				PlayerImpl impl = (PlayerImpl) player;
+				impl.sendPacket(container);
+			}
 		}
 	}
 	

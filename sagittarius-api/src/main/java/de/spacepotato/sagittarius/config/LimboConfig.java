@@ -160,4 +160,53 @@ public interface LimboConfig {
 	 * @return The payload that will be sent in the plugin message.
 	 */
 	byte[] getConnectPayload();
+	
+	/**
+	 * Returns true if the player should receive a message immediately after joining.
+	 * @return true if the player should receive a message after joining the server.
+	 */
+	boolean shouldSendJoinMessage();
+	
+	/**
+	 * Returns the join message that will be sent to the player after joining.
+	 * @return The join message.
+	 */
+	String getJoinMessage();
+	
+	/**
+	 * Returns true if an actionbar should be displayed on the server.
+	 * @return Whether the action bar is enabled.
+	 */
+	boolean shouldSendActionbar();
+
+	/**
+	 * Returns the message that will be in the action bar if it's enabled.
+	 * @return The actionbar message.
+	 */
+	String getActionbarMessage();
+	
+	/**
+	 * Returns the amount of ticks between actionbar packets.
+	 * @return The amount of ticks between actionbar packets.
+	 */
+	int getActionbarIntervalTicks();
+
+	/**
+	 * Returns whether regular broadcasts should be sent.
+	 * @return true if regular broadcasts should be sent.
+	 */
+	boolean shouldSendBroadcasts();
+	
+	/**
+	 * Returns the broadcast message that will be sent if broadcasts are enabled.
+	 * @return The broadcast message.
+	 */
+	String getBroadcastMessage();
+	
+	/**
+	 * Returns the amount of ticks between broadcasts.
+	 * @return The amount of ticks between broadcasts.
+	 */
+	int getBroadcastIntervalTicks();
+	
 }

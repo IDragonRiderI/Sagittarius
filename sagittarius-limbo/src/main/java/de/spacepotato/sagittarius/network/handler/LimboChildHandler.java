@@ -8,6 +8,8 @@ import java.util.Queue;
 import de.spacepotato.sagittarius.GameMode;
 import de.spacepotato.sagittarius.Sagittarius;
 import de.spacepotato.sagittarius.SagittariusImpl;
+import de.spacepotato.sagittarius.cache.PacketCache;
+import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.entity.PlayerImpl;
 import de.spacepotato.sagittarius.mojang.BungeeCordGameProfile;
 import de.spacepotato.sagittarius.mojang.GameProfile;
@@ -115,6 +117,8 @@ public class LimboChildHandler extends ChildNetworkHandler {
 	@Override
 	public void handleLoginStart(ClientLoginStartPacket packet) {
 		String name = packet.getName();
+		LimboConfig config = Sagittarius.getInstance().getConfig();
+		PacketCache cache = SagittariusImpl.getInstance().getPacketCache();
 		
 		GameProfile gameProfile = null;
 		if (BungeeCordGameProfile.isBungeeCordForwarding(handshake)) {
@@ -132,26 +136,29 @@ public class LimboChildHandler extends ChildNetworkHandler {
 		
 		// Load PLAY-packets
 		setState(State.PLAY);
-		sendPacket(SagittariusImpl.getInstance().getPacketCache().getJoinGame());
-		sendPacket(SagittariusImpl.getInstance().getPacketCache().getSpawnPosition());
+		sendPacket(cache.getJoinGame());
+		sendPacket(cache.getSpawnPosition());
 		
 		// Add to tablist for skin
 		List<ServerPlayerListItemPacket.PlayerListEntry> entries = new ArrayList<>();
-		GameMode gameMode = Sagittarius.getInstance().getConfig().getTabGameMode().orElse(Sagittarius.getInstance().getConfig().getGameMode());
+		GameMode gameMode = config.getTabGameMode().orElse(config.getGameMode());
 		entries.add(new ServerPlayerListItemPacket.PlayerListEntry(player.getUUID(), player.getName(), player.getSkin().orElse(new SkinProperty[0]), gameMode.getId(), 0, null));
 		ServerPlayerListItemPacket tablist = new ServerPlayerListItemPacket((byte) 0, entries);
 		sendPacket(tablist);
 		
 		SagittariusImpl.getInstance().getWorldCache().send(player);
 		
-		sendPacket(SagittariusImpl.getInstance().getPacketCache().getPositionAndLook());
-		sendPacket(SagittariusImpl.getInstance().getPacketCache().getPlayerAbilities());
+		sendPacket(cache.getPositionAndLook());
+		sendPacket(cache.getPlayerAbilities());
 		
 		
 		synchronized (Sagittarius.getInstance().getPlayers()) {
 			Sagittarius.getInstance().getPlayers().add(player);
 		}
-
+		
+		if (config.shouldSendJoinMessage()) {
+			player.sendMessage(config.getJoinMessage());
+		}
 	}
 	
 	// ============================================================ \\
