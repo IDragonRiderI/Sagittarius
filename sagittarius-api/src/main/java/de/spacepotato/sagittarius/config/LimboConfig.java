@@ -62,7 +62,6 @@ public interface LimboConfig {
 	 * Returns the biome of the world.
 	 * @return the world's biome.
 	 */
-	
 	Biome getBiome();
 	
 	/**

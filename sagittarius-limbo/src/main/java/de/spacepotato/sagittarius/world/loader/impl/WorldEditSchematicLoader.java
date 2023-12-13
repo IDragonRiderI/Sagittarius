@@ -1,7 +1,8 @@
-package de.spacepotato.sagittarius.world.loader;
+package de.spacepotato.sagittarius.world.loader.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
@@ -17,6 +18,7 @@ import de.spacepotato.sagittarius.nbt.NBTTagString;
 import de.spacepotato.sagittarius.world.BlockPosition;
 import de.spacepotato.sagittarius.world.Location;
 import de.spacepotato.sagittarius.world.WorldImpl;
+import de.spacepotato.sagittarius.world.loader.WorldLoader;
 import de.spacepotato.sagittarius.world.metadata.SignMetadata;
 import de.spacepotato.sagittarius.world.metadata.SkullMetadata;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +29,7 @@ public class WorldEditSchematicLoader implements WorldLoader {
 	@Override
 	public WorldImpl loadWorld(File file) {
 		WorldImpl world = new WorldImpl();
-		try (NBTInputStream in = new NBTInputStream(new GZIPInputStream(new FileInputStream(file)))) {
+		try (NBTInputStream in = new NBTInputStream(new GZIPInputStream(Files.newInputStream(file.toPath())))) {
 			NBTTagCompound compound = (NBTTagCompound) in.readTag();
 
 			int lenX = compound.getTag("Width", NBTTagShort.class).getValue();
@@ -52,24 +54,11 @@ public class WorldEditSchematicLoader implements WorldLoader {
 					for (int z = 0; z < lenZ; z++) {
 						int index = (y * lenZ + z) * lenX + x;
 						byte data = blockData[index];
-						short blockId = 0;
-						
-						// Check if there is a nibble for that block
-						if (index / 2 >= addBlocks.length) {
-							// Does not seem like that - no further block data added
-							blockId = (short) (blocks[index] & 0xFF);
-						} else {
-							int additionalData = 0;
-							if (index % 2 == 0) {
-								additionalData = ((addBlocks[index / 2] & 0x0F) << 8);
-							} else {
-								additionalData = ((addBlocks[index / 2] & 0xF0) << 4);
-							}
-							
-							blockId = (short) (additionalData + (blocks[index] & 0xFF));
-						}
-						
-						if (blockId == 0) continue;
+						short blockId = getBlockId(index, addBlocks, blocks);
+
+						if (blockId == 0) {
+                            continue;
+                        }
 						world.setTypeIdAndData(x + offsetX + worldOffsetX, y + offsetY + worldOffsetY, z + offsetZ + worldOffsetZ, blockId, data);
 					}
 				}
@@ -102,15 +91,32 @@ public class WorldEditSchematicLoader implements WorldLoader {
 						world.getMetadata().add(metadata);
 					}
 				}
-				
 			}
-			
-			
 		} catch (Exception ex) {
 			log.error("Unable to load schematic! ", ex);
 		}
 
 		return world;
+	}
+
+	private short getBlockId(int index, byte[] addBlocks, byte[] blocks) {
+		short blockId;
+
+		// Check if there is a nibble for that block
+		if (index / 2 >= addBlocks.length) {
+			// Does not seem like that - no further block data added
+			blockId = (short) (blocks[index] & 0xFF);
+		} else {
+			int additionalData;
+			if (index % 2 == 0) {
+				additionalData = ((addBlocks[index / 2] & 0x0F) << 8);
+			} else {
+				additionalData = ((addBlocks[index / 2] & 0xF0) << 4);
+			}
+
+			blockId = (short) (additionalData + (blocks[index] & 0xFF));
+		}
+		return blockId;
 	}
 
 	@Override

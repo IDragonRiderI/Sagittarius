@@ -1,23 +1,19 @@
 package de.spacepotato.sagittarius.chat;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class HoverEvent {
 
-	public static enum HoverEventAction {
+	public enum HoverEventAction {
 		SHOW_TEXT,
 		SHOW_ITEM,
 		SHOW_ENTITY;
-		
 	}
 	
 	private final HoverEventAction action;
 	private final Component value;
-	
-	public HoverEvent(HoverEventAction action, Component value) {
-		this.action = action;
-		this.value = value;
-	}
 	
 }

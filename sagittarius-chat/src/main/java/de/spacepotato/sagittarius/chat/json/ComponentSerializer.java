@@ -24,7 +24,7 @@ import de.spacepotato.sagittarius.chat.HoverEvent;
 public class ComponentSerializer implements JsonSerializer<Component>, JsonDeserializer<Component> {
 
 	public static final Gson GSON = new GsonBuilder().registerTypeHierarchyAdapter(Component.class, new ComponentSerializer()).create();
-	
+
 	@Override
 	public Component deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 		JsonObject object = json.getAsJsonObject();
@@ -32,13 +32,17 @@ public class ComponentSerializer implements JsonSerializer<Component>, JsonDeser
 		if (object.has("text")) {
 			result = new ChatComponent(object.get("text").getAsString());
 		}
-		
-		if (result == null) return result;
+
+		if (result == null) {
+            return null;
+        }
 		byte flags = 0;
 		for (ComponentStyle style : ComponentStyle.values()) {
 			String lowerName = style.name().toLowerCase();
 			boolean hasStyle = object.has(lowerName) && object.get(lowerName).getAsBoolean();
-			if (hasStyle) flags |= style.getShift();
+			if (hasStyle) {
+                flags |= style.getShift();
+            }
 		}
 		result.setStyle(flags);
 		if (object.has("color")) {
@@ -54,7 +58,7 @@ public class ComponentSerializer implements JsonSerializer<Component>, JsonDeser
 			// Make a modifiable list
 			result.setExtra(new ArrayList<>(Arrays.asList(context.deserialize(object.get("extra"), Component[].class))));
 		}
-		
+
 		return result;
 	}
 
@@ -65,19 +69,27 @@ public class ComponentSerializer implements JsonSerializer<Component>, JsonDeser
 			ChatComponent chat = (ChatComponent) src;
 			object.addProperty("text", chat.getText());
 		}
-		
+
 		// Italic, bold, strikethrough, ...
 		for (ComponentStyle style : ComponentStyle.values()) {
 			if (style.doesApply(src.getStyle())) {
 				object.addProperty(style.name().toLowerCase(), true);
 			}
 		}
-		
-		if (src.getColor() != null) object.addProperty("color", src.getColor().toName());
-		if (src.getClickEvent() != null) object.add("clickEvent", context.serialize(src.getClickEvent()));
-		if (src.getHoverEvent() != null) object.add("hoverEvent", context.serialize(src.getHoverEvent()));
-		if (src.getExtra() != null) object.add("extra", context.serialize(src.getExtra()));
-		
+
+		if (src.getColor() != null) {
+            object.addProperty("color", src.getColor().toName());
+        }
+		if (src.getClickEvent() != null) {
+            object.add("clickEvent", context.serialize(src.getClickEvent()));
+        }
+		if (src.getHoverEvent() != null) {
+            object.add("hoverEvent", context.serialize(src.getHoverEvent()));
+        }
+		if (src.getExtra() != null) {
+            object.add("extra", context.serialize(src.getExtra()));
+        }
+
 		return object;
 	}
 

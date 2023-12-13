@@ -23,10 +23,6 @@ public class PacketCache {
 	private PacketContainer playerAbilities;
 	private PacketContainer connectPacket;
 	
-	public PacketCache() {
-		
-	}
-	
 	public void createPackets() {
 		createJoinGame();
 		createSpawnPosition();
@@ -40,7 +36,7 @@ public class PacketCache {
 		Dimension dimension = Sagittarius.getInstance().getConfig().getDimension();
 		Difficulty difficulty = Sagittarius.getInstance().getConfig().getDifficulty();
 		boolean reducedDebugInfo = Sagittarius.getInstance().getConfig().isReducedDebugInfo();
-		joinGame = new PacketContainer(new ServerJoinGamePacket(0, (byte) gameMode.getId(), (byte) dimension.getId(), (byte) difficulty.ordinal(), (byte) 1, "default", reducedDebugInfo));
+		joinGame = new PacketContainer(new ServerJoinGamePacket(0, (byte) gameMode.getId(), dimension.getId(), (byte) difficulty.ordinal(), (byte) 1, "default", reducedDebugInfo));
 	}
 	
 	private void createSpawnPosition() {

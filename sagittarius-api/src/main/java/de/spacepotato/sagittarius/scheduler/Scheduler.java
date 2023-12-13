@@ -34,14 +34,13 @@ public interface Scheduler {
 	 */
 	ScheduledTask repeat(Runnable runnable, long delay, long period);
 
+
 	// ============================================================ \\
 	//                                                              \\
 	//                            Async                             \\	
 	//                                                              \\
 	// ============================================================ \\
-	
-	
-	
+
 	/**
 	 * Queues a task for immediate asynchronous processing.
 	 * @param runnable The task to be scheduled.
@@ -67,6 +66,5 @@ public interface Scheduler {
 	 * @return A ScheduledTask object for direct access to the underlying task.
 	 */
 	ScheduledTask repeatAsync(Runnable runnable, long delay, long period);
-	
-	
+
 }

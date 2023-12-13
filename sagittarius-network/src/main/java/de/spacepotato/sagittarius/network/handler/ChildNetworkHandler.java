@@ -23,7 +23,7 @@ public abstract class ChildNetworkHandler {
 	protected State state;
 	protected PacketMappings stateMappings;
 	
-	public ChildNetworkHandler(Channel channel) {
+	protected ChildNetworkHandler(Channel channel) {
 		this.channel = channel;
 		setState(State.HANDSHAKE);
 	}

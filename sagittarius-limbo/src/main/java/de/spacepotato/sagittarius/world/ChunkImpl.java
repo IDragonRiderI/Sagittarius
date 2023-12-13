@@ -30,7 +30,9 @@ public class ChunkImpl implements Chunk {
 	}
 
 	public void set(int x, int y, int z, int typeId, byte data) {
-		if(y < 0 || y >= 256) return;
+		if(y < 0 || y >= 256) {
+            return;
+        }
 		int sectionNumber = y >> 4;
 		if(chunks[sectionNumber] == null) {
 			chunks[sectionNumber] = new ChunkSection();
@@ -39,7 +41,9 @@ public class ChunkImpl implements Chunk {
 	}
 	
 	public short getBlock(int x, int y, int z) {
-		if(y < 0 || y >= 256) return 0;
+		if(y < 0 || y >= 256) {
+            return 0;
+        }
 		int sectionNumber = y >> 4;
 		if(chunks[sectionNumber] == null) {
 			chunks[sectionNumber] = new ChunkSection();
@@ -61,7 +65,7 @@ public class ChunkImpl implements Chunk {
 		
 		// 16^3 = 1 chunk cube. We have multiple chunk cubes.
 		int blocks = 16*16*16*sections.length;
-		// 1 short per block + a nibble (= half a byte) of blocklight + potentially half a nibble of skylight + 256 biomes
+		// 1 short per block + a nibble (= half a byte) of block light + potentially half a nibble of skylight + 256 biomes
 		byte[] bytes = new byte[blocks * 2 + (skyLight ? blocks : blocks/2) + (full ? 256 : 0)];
 		
 		int pos = 0;
@@ -108,7 +112,7 @@ public class ChunkImpl implements Chunk {
 			}
 		}
 		
-		if(full) {
+		if (full) {
 			for(byte b : biomes) {
 				bytes[pos++] = b;
 			}
@@ -124,5 +128,4 @@ public class ChunkImpl implements Chunk {
 		return blocks * 2 + (skyLight ? blocks : blocks/2) + (full ? 256 : 0);
 	}
 
-	
 }

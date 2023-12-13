@@ -38,7 +38,7 @@ public class LimboChildHandler extends ChildNetworkHandler {
 
 	private PlayerImpl player;
 	private ClientHandshakePacket handshake;
-	private Queue<Integer> keepAliveIds;
+	private final Queue<Integer> keepAliveIds;
 	private PlayerMovementTracker movementTracker;
 	
 	public LimboChildHandler(Channel channel) {
@@ -65,7 +65,9 @@ public class LimboChildHandler extends ChildNetworkHandler {
 	
 	@Override
 	public void handleDisconnect() {
-		if (player == null) return;
+		if (player == null) {
+            return;
+        }
 		synchronized (Sagittarius.getInstance().getPlayers()) {
 			Sagittarius.getInstance().getPlayers().remove(player);
 		}
@@ -100,12 +102,12 @@ public class LimboChildHandler extends ChildNetworkHandler {
 	
 	@Override
 	public void handleStatusRequest(ClientStatusRequestPacket packet) {
-		
+
 	}
 
 	@Override
 	public void handleStatusPing(ClientStatusPingPacket packet) {
-		
+
 	}
 	
 	// ============================================================ \\
@@ -120,7 +122,7 @@ public class LimboChildHandler extends ChildNetworkHandler {
 		LimboConfig config = Sagittarius.getInstance().getConfig();
 		PacketCache cache = SagittariusImpl.getInstance().getPacketCache();
 		
-		GameProfile gameProfile = null;
+		GameProfile gameProfile;
 		if (BungeeCordGameProfile.isBungeeCordForwarding(handshake)) {
 			gameProfile = new BungeeCordGameProfile(name, handshake);
 		} else {
@@ -170,10 +172,9 @@ public class LimboChildHandler extends ChildNetworkHandler {
 	@Override
 	public void handleKeepAlive(ClientKeepAlivePacket packet) {
 		// Keep-Alive mismatch!
-		if (keepAliveIds.size() == 0 || keepAliveIds.poll().intValue() != packet.getKeepAliveId()) {
+		if (keepAliveIds.isEmpty() || keepAliveIds.poll() != packet.getKeepAliveId()) {
 			player.kick("Invalid Keep-Alive packet received.");
-			return;
-		}
+        }
 	}
 
 	@Override
@@ -197,7 +198,6 @@ public class LimboChildHandler extends ChildNetworkHandler {
 	public void handlePositionLook(ClientPositionLookPacket packet) {
 		movementTracker.onMove(packet.getX(), packet.getY(), packet.getZ());
 		movementTracker.onRotate(packet.getYaw(), packet.getPitch());
-		
 	}
 
 }

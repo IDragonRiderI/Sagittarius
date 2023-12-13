@@ -21,6 +21,7 @@ import de.spacepotato.sagittarius.scheduler.SagittariusScheduler;
 import de.spacepotato.sagittarius.scheduler.ScheduledTask;
 import de.spacepotato.sagittarius.scheduler.Scheduler;
 import de.spacepotato.sagittarius.viaversion.SagittariusViaPlatform;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -33,9 +34,11 @@ public class SagittariusImpl extends Sagittarius {
 	private final SagittariusScheduler scheduler;
 	private final SagittariusServerImpl server;
 	private final SagittariusConfig config;
+	@Getter
 	private final PacketCache packetCache;
 	private final List<Player> players;
 	private final Random random;
+	@Getter
 	private final WorldCache worldCache;
 	
 	private ScheduledTask keepAliveTask;
@@ -78,15 +81,7 @@ public class SagittariusImpl extends Sagittarius {
 	public List<Player> getPlayers() {
 		return players;
 	}
-	
-	public PacketCache getPacketCache() {
-		return packetCache;
-	}
-	
-	public WorldCache getWorldCache() {
-		return worldCache;
-	}
-	
+
 	// ============================================================ \\
 	//                                                              \\
 	//                           Generic                            \\	

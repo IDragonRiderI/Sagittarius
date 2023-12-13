@@ -27,11 +27,12 @@ public class PlayerMovementTracker {
 		pitch = spawn.getPitch();
 		
 		nextConnectionAttempt = System.currentTimeMillis() + Sagittarius.getInstance().getConfig().getCheckDelayAfterJoin();
-		
 	}
 	
 	public void onMove(double x, double y, double z) {
-		if (!Sagittarius.getInstance().getConfig().shouldConnectOnMove()) return;
+		if (!Sagittarius.getInstance().getConfig().shouldConnectOnMove()) {
+            return;
+        }
 		double distanceX = x - this.x;
 		double distanceY = y - this.y;
 		double distanceZ = z - this.z;
@@ -43,13 +44,14 @@ public class PlayerMovementTracker {
 		if (distanceXYZ > Sagittarius.getInstance().getConfig().getMoveThresholdSquared()) {
 			tryConnect();
 		}
-		
 	}
 	
 	public void onRotate(float yaw, float pitch) {
-		if (!Sagittarius.getInstance().getConfig().shouldConnectOnRotate()) return;
+		if (!Sagittarius.getInstance().getConfig().shouldConnectOnRotate()) {
+            return;
+        }
 		float diffYaw = yaw - this.yaw;
-		float diffPitch = pitch = this.pitch;
+		float diffPitch = pitch - this.pitch;
 		
 		this.yaw = yaw;
 		this.pitch = pitch;
@@ -62,7 +64,9 @@ public class PlayerMovementTracker {
 	}
 	
 	public void tryConnect() {
-		if (System.currentTimeMillis() < nextConnectionAttempt) return;
+		if (System.currentTimeMillis() < nextConnectionAttempt) {
+            return;
+        }
 		
 		nextConnectionAttempt = System.currentTimeMillis() + Sagittarius.getInstance().getConfig().getCheckDelayBetweenAttempts();
 		player.sendPacket(SagittariusImpl.getInstance().getPacketCache().getConnectPacket());

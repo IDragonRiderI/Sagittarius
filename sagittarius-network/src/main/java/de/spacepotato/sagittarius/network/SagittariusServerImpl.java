@@ -14,6 +14,8 @@ import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -22,7 +24,9 @@ public class SagittariusServerImpl implements SagittariusServer {
 	private final ParentNetworkHandler parentHandler;
 	private String host;
 	private int port;
+	@Setter
 	private boolean nativeNetworking;
+	@Getter
 	private Channel server;
 	private MultiVersionInjector injector;
 	
@@ -43,7 +47,6 @@ public class SagittariusServerImpl implements SagittariusServer {
 		EventLoopGroup bossGroup = epoll ? new EpollEventLoopGroup(1) : new NioEventLoopGroup(1);
 		EventLoopGroup workerGroup = epoll ? new EpollEventLoopGroup() : new NioEventLoopGroup();
 		
-		
 		try {
 			ServerBootstrap bootstrap = new ServerBootstrap()
 					.group(bossGroup, workerGroup)
@@ -51,26 +54,20 @@ public class SagittariusServerImpl implements SagittariusServer {
 					.childOption(ChannelOption.TCP_NODELAY, true)
 					.childHandler(new ClientConnectionInitializer(parentHandler, injector));			
 			
-			server = bootstrap.bind(host, port).addListener(new ChannelFutureListener() {
-				
-				public void operationComplete(ChannelFuture future) throws Exception {
-					if (!future.isSuccess()) {
-						log.error("Unable to start server on " + host + ":" + port + "!", future.cause());
-						bossGroup.shutdownGracefully();
-						workerGroup.shutdownGracefully();
-						return;
-					}
-					log.info("Server listening on " + host + ":" + port + "!");
-					
-					future.channel().closeFuture().addListener(new ChannelFutureListener() {
-						
-						public void operationComplete(ChannelFuture future) throws Exception {
-							bossGroup.shutdownGracefully();
-							workerGroup.shutdownGracefully();
-						}
-					});
-				}
-			}).sync().channel();
+			server = bootstrap.bind(host, port).addListener((ChannelFutureListener) future -> {
+                if (!future.isSuccess()) {
+                    log.error("Unable to start server on " + host + ":" + port + "!", future.cause());
+                    bossGroup.shutdownGracefully();
+                    workerGroup.shutdownGracefully();
+                    return;
+                }
+                log.info("Server listening on " + host + ":" + port + "!");
+
+                future.channel().closeFuture().addListener((ChannelFutureListener) future1 -> {
+					bossGroup.shutdownGracefully();
+					workerGroup.shutdownGracefully();
+				});
+            }).sync().channel();
 		} catch (InterruptedException e) {
 			log.error("Interrupted while trying to start server!", e);
 		}		
@@ -78,7 +75,9 @@ public class SagittariusServerImpl implements SagittariusServer {
 
 	@Override
 	public void stop() {
-		if (!isRunning()) return;
+		if (!isRunning()) {
+            return;
+        }
 		server.close().syncUninterruptibly();
 	}
 
@@ -86,14 +85,6 @@ public class SagittariusServerImpl implements SagittariusServer {
 	public void setHostAndPort(String host, int port) {
 		this.host = host;
 		this.port = port;
-	}
-	
-	public void setNativeNetworking(boolean shouldUseNativeNetworking) {
-		this.nativeNetworking = shouldUseNativeNetworking;
-	}
-	
-	public Channel getServer() {
-		return server;
 	}
 
 	@Override

@@ -27,11 +27,8 @@ import de.spacepotato.sagittarius.viaversion.platform.SagittariusViaLoader;
 public class SagittariusViaPlatform implements ViaPlatform<Player>{
 
 	private static final SagittariusViaPlatform INSTANCE = new SagittariusViaPlatform();
-	
-	public static SagittariusViaPlatform getInstance() {
-		return INSTANCE;
-	}
-	
+	private static final String PLUGIN_VERSION = "4.9.2";
+
 	public static void init() {
 		if (!Sagittarius.getInstance().getConfig().shouldUseViaVersion()) return;
 		Via.init(ViaManagerImpl.builder()
@@ -58,15 +55,17 @@ public class SagittariusViaPlatform implements ViaPlatform<Player>{
 
 	}
 	
-	private Logger logger;
-	private File dataFolder;
-	private SagittariusViaApi api;
-	private SagittariusViaConfig config;
+	private final Logger logger;
+	private final File dataFolder;
+	private final SagittariusViaApi api;
+	private final SagittariusViaConfig config;
 	
 	public SagittariusViaPlatform() {
 		logger = new JULLoggerBridge();
 		dataFolder = new File("viaversion");
-		if (!dataFolder.exists()) dataFolder.mkdir();
+		if (!dataFolder.exists()) {
+			dataFolder.mkdir();
+		}
 		File configFile = new File(dataFolder, "via.yml");
 		
 		api = new SagittariusViaApi();
@@ -90,7 +89,7 @@ public class SagittariusViaPlatform implements ViaPlatform<Player>{
 
 	@Override
 	public String getPluginVersion() {
-		return "4.9.2";
+		return PLUGIN_VERSION;
 	}
 
 	@Override
@@ -121,7 +120,7 @@ public class SagittariusViaPlatform implements ViaPlatform<Player>{
 	@Override
 	public ViaCommandSender[] getOnlinePlayers() {
 		synchronized (Sagittarius.getInstance().getPlayers()) {
-			return Sagittarius.getInstance().getPlayers().stream().map(SagittariusCommandSender::new).toArray(i -> new SagittariusCommandSender[i]);
+			return Sagittarius.getInstance().getPlayers().stream().map(SagittariusCommandSender::new).toArray(SagittariusCommandSender[]::new);
 		}
 	}
 
@@ -149,7 +148,9 @@ public class SagittariusViaPlatform implements ViaPlatform<Player>{
 			}
 		}
 
-		if (target != null) target.kick(message);
+		if (target != null) {
+            target.kick(message);
+        }
 		return target != null;
 	}
 

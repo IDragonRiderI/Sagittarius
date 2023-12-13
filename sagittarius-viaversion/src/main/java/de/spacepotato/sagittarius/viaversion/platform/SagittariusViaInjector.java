@@ -18,17 +18,17 @@ public class SagittariusViaInjector implements ViaInjector, MultiVersionInjector
 
 
 	@Override
-	public void inject() throws Exception {
+	public void inject() {
 		Sagittarius.getInstance().getServer().setMultiVersionInjector(this);
 	}
 
 	@Override
-	public void uninject() throws Exception {
+	public void uninject() {
 		Sagittarius.getInstance().getServer().setMultiVersionInjector(null);
 	}
 
 	@Override
-	public int getServerProtocolVersion() throws Exception {
+	public int getServerProtocolVersion() {
 		return 47;
 	}
 
@@ -45,7 +45,7 @@ public class SagittariusViaInjector implements ViaInjector, MultiVersionInjector
 			regularInitCallback.run();
 			return;
 		}
-		UserConnection info = new UserConnectionImpl((SocketChannel) channel);
+		UserConnection info = new UserConnectionImpl(channel);
 		new ProtocolPipelineImpl(info);
 		regularInitCallback.run();
 

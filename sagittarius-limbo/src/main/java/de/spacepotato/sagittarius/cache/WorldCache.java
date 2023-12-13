@@ -13,9 +13,9 @@ import de.spacepotato.sagittarius.world.Chunk;
 import de.spacepotato.sagittarius.world.ChunkImpl;
 import de.spacepotato.sagittarius.world.Dimension;
 import de.spacepotato.sagittarius.world.WorldImpl;
-import de.spacepotato.sagittarius.world.loader.BlankWorldLoader;
-import de.spacepotato.sagittarius.world.loader.WorldEditSchematicLoader;
-import de.spacepotato.sagittarius.world.loader.WorldLoader;
+import de.spacepotato.sagittarius.world.loader.impl.BlankWorldLoader;
+import de.spacepotato.sagittarius.world.loader.impl.WorldEditSchematicLoader;
+import de.spacepotato.sagittarius.world.loader.impl.WorldLoader;
 import de.spacepotato.sagittarius.world.metadata.BlockMetadata;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class WorldCache {
 
 	private List<PacketContainer> worldPackets;
-	private List<WorldLoader> loaders;
+	private final List<WorldLoader> loaders;
 	
 	public WorldCache() {
 		loaders = new ArrayList<>();
@@ -46,8 +46,8 @@ public class WorldCache {
 		List<PacketContainer> worldPackets = new ArrayList<>();
 		
 		List<Chunk> chunks = new ArrayList<>();
-		for (ObjectCursor<ChunkImpl> c : world.getChunks().values()) {
-			chunks.add(c.value);
+		for (ObjectCursor<ChunkImpl> cursor : world.getChunks().values()) {
+			chunks.add(cursor.value);
 		}
 		
 		boolean skylight = Sagittarius.getInstance().getConfig().getDimension() == Dimension.OVERWORLD;
@@ -76,17 +76,16 @@ public class WorldCache {
 			List<Chunk> chunkList = splitted.get(currentBatch);
 			chunkList.add(chunks.get(i));
 		}
-		
-		splitted.forEach(batch -> {
-			ServerMapChunkBulkPacket packet = new ServerMapChunkBulkPacket(skylight, batch);
-			worldPackets.add(new PacketContainer(packet));			
-		});
-		
-		for (BlockMetadata metadata : world.getMetadata()) {
+
+        for (List<Chunk> batch : splitted) {
+            ServerMapChunkBulkPacket packet = new ServerMapChunkBulkPacket(skylight, batch);
+            worldPackets.add(new PacketContainer(packet));
+        }
+
+        for (BlockMetadata metadata : world.getMetadata()) {
 			worldPackets.add(new PacketContainer(metadata.toPacket()));
 		}
-		
-		
+
 		this.worldPackets = worldPackets;
 	}
 	

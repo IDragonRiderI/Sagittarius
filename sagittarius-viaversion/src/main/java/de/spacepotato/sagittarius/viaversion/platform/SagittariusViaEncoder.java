@@ -32,16 +32,21 @@ public class SagittariusViaEncoder extends MessageToByteEncoder<Object> implemen
 
 	@Override
 	public void transform(ByteBuf bytebuf) throws Exception {
-		if (!info.checkClientboundPacket())
-			throw CancelEncoderException.generate(null);
-		if (!info.shouldTransformPacket())
-			return;
+		if (!info.checkClientboundPacket()) {
+            throw CancelEncoderException.generate(null);
+        }
+		if (!info.shouldTransformPacket()) {
+            return;
+        }
 		info.transformClientbound(bytebuf, CancelEncoderException::generate);
 	}
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		if (cause instanceof CancelEncoderException) return;
+		if (cause instanceof CancelEncoderException) {
+            return;
+        }
+		super.exceptionCaught(ctx, cause);
 	}
 
 }

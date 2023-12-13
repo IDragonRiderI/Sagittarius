@@ -1,6 +1,7 @@
 package de.spacepotato.sagittarius.world;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.carrotsearch.hppc.LongObjectHashMap;
@@ -12,8 +13,8 @@ import lombok.Getter;
 @Getter
 public class WorldImpl implements World {
 	
-	private LongObjectHashMap<ChunkImpl> chunks;
-	private List<BlockMetadata> metadata;
+	private final LongObjectHashMap<ChunkImpl> chunks;
+	private final List<BlockMetadata> metadata;
 	
 	public WorldImpl() {
 		chunks = new LongObjectHashMap<>();
@@ -80,9 +81,7 @@ public class WorldImpl implements World {
 	public void applyBiome(Biome biome) {
 		byte id = (byte) biome.ordinal();
 		byte[] biomes = new byte[256];
-		for (int i = 0; i < biomes.length; i++) {
-			biomes[i] = id;
-		}
+        Arrays.fill(biomes, id);
 		
 		for (ObjectCursor<ChunkImpl> chunk : chunks.values()) {
 			chunk.value.setBiomes(biomes);

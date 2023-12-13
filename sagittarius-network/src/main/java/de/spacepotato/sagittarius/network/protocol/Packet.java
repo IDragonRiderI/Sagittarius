@@ -2,6 +2,7 @@ package de.spacepotato.sagittarius.network.protocol;
 
 import java.io.DataOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import de.spacepotato.sagittarius.nbt.NBT;
 import de.spacepotato.sagittarius.nbt.NBTOutputStream;
@@ -115,25 +116,15 @@ public abstract class Packet {
 			byte[] data = new byte[size];
 			buf.readBytes(data);
 
-			try {
-				return new String(data, "UTF-8");
-			} catch (UnsupportedEncodingException ex) {
-				log.error("Encoding unknown: UTF-8 ", ex);
-				return null;
-			}
-		}
+            return new String(data, StandardCharsets.UTF_8);
+        }
 	}
 
 	public static void writeString(ByteBuf buf, String str) {
-		try {
-			byte[] b = str.getBytes("UTF-8");
-			writeVarInt(buf, b.length);
-			buf.writeBytes(b);
-		} catch (UnsupportedEncodingException ex) {
-			log.error("Encoding unknown: UTF-8 ", ex);
-		}
-
-	}
+        byte[] b = str.getBytes(StandardCharsets.UTF_8);
+        writeVarInt(buf, b.length);
+        buf.writeBytes(b);
+    }
 
 	public static void writeByteArray(ByteBuf buf, byte[] data) {
 		writeVarInt(buf, data.length);
@@ -144,7 +135,7 @@ public abstract class Packet {
 		return readByteArray(buf, buf.readableBytes());
 	}
 	
-	public static byte[] readRest(ByteBuf buf) throws PacketException {
+	public static byte[] readRest(ByteBuf buf) {
 		byte[] b = new byte[buf.readableBytes()];
 		buf.readBytes(b);
 		return b;
@@ -169,8 +160,7 @@ public abstract class Packet {
 
 	public static float readAngle(ByteBuf buf) {
 		byte b = buf.readByte();
-		float angle = (float) b * 360.0F / 256.0F;
-		return angle;
+		return b * 360.0F / 256.0F;
 	}
 
 	public static void writeFixedPointNumber(ByteBuf buf, double d) {
@@ -183,18 +173,21 @@ public abstract class Packet {
 
 	public static double readFixedPointNumber(ByteBuf buf) {
 		int i = buf.readInt();
-		return (double) i / 32.0D;
+		return i / 32.0D;
 	}
 
 	public static double readFixedPointNumberByte(ByteBuf buf) {
 		byte i = buf.readByte();
-		return (double) i / 32.0D;
+		return i / 32.0D;
 	}
 	
 	public static void writeNBT(ByteBuf buf, NBT nbt) throws Exception {
 		try(NBTOutputStream out = new NBTOutputStream(new ByteBufOutputStream(buf))){
-			if(nbt == null) out.write(0);
-			else out.writeTag(nbt);			
+			if(nbt == null) {
+                out.write(0);
+            } else {
+                out.writeTag(nbt);
+            }
 		}
 	}
 }

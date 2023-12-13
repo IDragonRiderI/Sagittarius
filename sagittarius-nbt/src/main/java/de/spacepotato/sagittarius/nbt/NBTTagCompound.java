@@ -1,6 +1,7 @@
 package de.spacepotato.sagittarius.nbt;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import lombok.AllArgsConstructor;
@@ -12,10 +13,10 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 public class NBTTagCompound extends NBT {
 
-	private HashMap<String, NBT> value;
+	private Map<String, NBT> value;
 	
 	public NBTTagCompound() {
-		value = new HashMap<String, NBT>();
+		value = new HashMap<>();
 	}
 	
 	public void read(NBTInputStream in) throws Exception {

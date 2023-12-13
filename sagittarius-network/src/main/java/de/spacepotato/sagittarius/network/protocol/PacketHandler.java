@@ -13,7 +13,7 @@ public class PacketHandler extends ChannelInboundHandlerAdapter {
 	}
 	
 	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		if (!(msg instanceof Packet)) return;
 		Packet packet = (Packet) msg;
 		packet.handle(childHandler);

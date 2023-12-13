@@ -1,11 +1,13 @@
 package de.spacepotato.sagittarius.chat;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class ClickEvent {
 
-	public static enum ClickEventAction {
+	public enum ClickEventAction {
 		OPEN_URL,
 		RUN_COMMAND,
 		SUGGEST_COMMAND,
@@ -14,10 +16,5 @@ public class ClickEvent {
 	
 	private final ClickEventAction action;
 	private final String value;
-	
-	public ClickEvent(ClickEventAction action, String value) {
-		this.action = action;
-		this.value = value;
-	}
-	
+
 }

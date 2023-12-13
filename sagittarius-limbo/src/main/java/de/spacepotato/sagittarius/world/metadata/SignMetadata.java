@@ -18,8 +18,7 @@ public class SignMetadata extends BlockMetadata {
 	
 	@Override
 	public Packet toPacket() {
-		ServerUpdateSignPacket updateSign = new ServerUpdateSignPacket(position, line1, line2, line3, line4);
-		return updateSign;
+		return new ServerUpdateSignPacket(position, line1, line2, line3, line4);
 	}
 	
 	

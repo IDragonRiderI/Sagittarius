@@ -31,10 +31,10 @@ public class TomlConfigurationFile {
 			}
 			try (InputStream in = TomlConfigurationFile.class.getResourceAsStream("/config.toml")) {
 				Files.copy(in, configFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			} catch(Exception ex) {
-				log.error("Failed to copy config file! ", ex);
+			} catch (IOException e) {
+				log.error("Failed to copy config file! ", e);
 			}
-		}
+        }
 		
 		return new Toml().read(configFile).to(TomlConfigurationFile.class);		
 	}

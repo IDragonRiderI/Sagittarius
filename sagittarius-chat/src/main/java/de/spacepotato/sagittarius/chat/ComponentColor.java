@@ -21,12 +21,12 @@ public enum ComponentColor {
 	
 	private final String code;
 	private final String lowerName;
-	
-	private ComponentColor(String code) {
+
+	ComponentColor(String code) {
 		this.code = code;
 		this.lowerName = name().toLowerCase();
 	}
-	
+
 	public static ComponentColor fromCode(String code) {
 		for(ComponentColor c : values()) {
 			if(c.code.equals(code)) {

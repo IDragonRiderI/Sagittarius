@@ -17,9 +17,9 @@ public class BungeeCordGameProfile implements GameProfile {
 		return packet.getServerAddress().contains(DELIMITER);
 	}
 	
-	private String name;
-	private UUID uuid;
-	private Optional<SkinProperty[]> properties;
+	private final String name;
+	private final UUID uuid;
+	private final Optional<SkinProperty[]> properties;
 	
 	public BungeeCordGameProfile(String name, ClientHandshakePacket packet) {
 		String[] handshakeData = packet.getServerAddress().split(DELIMITER);

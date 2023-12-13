@@ -16,8 +16,7 @@ public class SkullMetadata extends BlockMetadata {
 	
 	@Override
 	public Packet toPacket() {
-		ServerUpdateBlockEntityPacket updateBlock = new ServerUpdateBlockEntityPacket(position, (byte) 4, nbt);
-		return updateBlock;
+		return new ServerUpdateBlockEntityPacket(position, (byte) 4, nbt);
 	}
 	
 }

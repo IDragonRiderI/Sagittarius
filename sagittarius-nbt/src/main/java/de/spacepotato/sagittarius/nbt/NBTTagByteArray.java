@@ -20,7 +20,6 @@ public class NBTTagByteArray extends NBT {
 		for(int i = 0; i < length; i++) {
 			value[i] = in.readByte();
 		}
-		
 	}
 	
 	@Override

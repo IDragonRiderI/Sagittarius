@@ -41,8 +41,10 @@ public class SagittariusViaDecoder extends ByteToMessageDecoder {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		if (cause instanceof CancelDecoderException)
-			return;
+		if (cause instanceof CancelDecoderException) {
+            return;
+        }
+		super.exceptionCaught(ctx, cause);
 	}
 
 }

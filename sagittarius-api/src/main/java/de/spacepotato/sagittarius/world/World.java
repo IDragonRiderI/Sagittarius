@@ -10,7 +10,6 @@ public interface World {
 	 * @param z The absolute z coordinate of the chunk.
 	 * @return The chunk located at the given coordinates.
 	 */
-	
 	Chunk getChunk(int x, int z);
 	
 }

@@ -16,11 +16,11 @@ public class NBTTagList extends NBT {
 	private int id = 0;
 	
 	public NBTTagList() {
-		value = new ArrayList<NBT>();
+		value = new ArrayList<>();
 	}
 	
 	public NBTTagList(int id) {
-		value = new ArrayList<NBT>();
+		value = new ArrayList<>();
 		this.id = id;
 	}
 	
@@ -40,7 +40,7 @@ public class NBTTagList extends NBT {
 	@Override
 	public void write(NBTOutputStream out) throws Exception {
 		int i = id;
-		if(i == 0 && value.size() > 0) {
+		if(i == 0 && !value.isEmpty()) {
 			i = value.get(0).getId();
 		}
 		out.writeByte(i);

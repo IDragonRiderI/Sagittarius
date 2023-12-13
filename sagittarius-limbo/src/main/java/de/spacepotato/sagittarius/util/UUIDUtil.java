@@ -4,6 +4,10 @@ import java.util.regex.Pattern;
 
 public class UUIDUtil {
 
+	private UUIDUtil() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	private static final Pattern PATTERN = Pattern.compile("(.{8})(.{4})(.{4})(.{4})(.{12})");
 	
 	public static String addDashes(String uuid) {

@@ -14,17 +14,14 @@ import de.spacepotato.sagittarius.network.protocol.State;
 import de.spacepotato.sagittarius.network.protocol.play.ServerChatMessagePacket;
 import de.spacepotato.sagittarius.network.protocol.play.ServerDisconnectPacket;
 import io.netty.buffer.ByteBuf;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class PlayerImpl implements Player, PacketReceiver {
 
 	private final LimboChildHandler childHandler;
 	private final GameProfile profile;
-	
-	public PlayerImpl(LimboChildHandler childHandler, GameProfile profile) {
-		this.childHandler = childHandler;
-		this.profile = profile;
-	}
-	
+
 	@Override
 	public String getName() {
 		return profile.getName();

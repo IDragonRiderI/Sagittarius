@@ -1,5 +1,8 @@
 package de.spacepotato.sagittarius.nbt;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public enum NBTIDs {
 
 	TAG_END,
@@ -16,13 +19,9 @@ public enum NBTIDs {
 	TAG_INT_ARRAY(NBTTagIntArray.class),
 	TAG_LONG_ARRAY(NBTTagLongArray.class);
 
-	Class<? extends NBT> clazz; 
+	private Class<? extends NBT> clazz;
 	
-	private NBTIDs() {
-	
-	}
-	
-	private NBTIDs(Class<? extends NBT> clazz) {
+	NBTIDs(Class<? extends NBT> clazz) {
 		this.clazz = clazz;
 	}
 	
@@ -33,7 +32,9 @@ public enum NBTIDs {
 
 	static int getId(Class<? extends NBT> class1) {
 		for(int i = 0; i < values().length; i++) {
-			if(values()[i].clazz == class1) return i;
+			if(values()[i].clazz == class1) {
+                return i;
+            }
 		}
 		return 0;
 	}

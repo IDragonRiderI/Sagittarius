@@ -24,7 +24,9 @@ public abstract class Component {
 	}
 	
 	public void addExtra(Component component) {
-		if (extra == null) extra = new ArrayList<>();
+		if (extra == null) {
+            extra = new ArrayList<>();
+        }
 		extra.add(component);
 	}
 	

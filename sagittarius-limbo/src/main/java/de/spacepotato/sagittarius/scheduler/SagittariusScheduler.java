@@ -3,8 +3,10 @@ package de.spacepotato.sagittarius.scheduler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 public class SagittariusScheduler implements Scheduler {
 
@@ -72,7 +74,9 @@ public class SagittariusScheduler implements Scheduler {
 						cancelledTasks.add(task);
 						continue;
 					}
-					if (!task.isReady(currentTick)) continue;
+					if (!task.isReady(currentTick)) {
+                        continue;
+                    }
 					currentTasks.add(task);
 				}
 				
@@ -81,17 +85,20 @@ public class SagittariusScheduler implements Scheduler {
 					tasks.remove(task);
 				}
 				
-				// TODO: Prefer async tasks since they won't block us.
 				// Call all tasks that need processing.
-				for (SagittariusScheduledTask task : currentTasks) {
-					if (task.isSync()) task.run();
-					else task.runAsync(executor);
-					if (!task.isRepeating()) tasks.remove(task);
+				for (SagittariusScheduledTask task : currentTasks.stream().sorted((o1, o2) -> Boolean.compare(o2.isSync(), o1.isSync())).collect(Collectors.toList())) {
+					if (task.isSync()) {
+                        task.run();
+                    } else {
+                        task.runAsync(executor);
+                    }
+
+					if (!task.isRepeating()) {
+                        tasks.remove(task);
+                    }
 				}
-				
-				
 			}
-			// Some clean up so we are ready for the next tick.
+			// Some clean up, so we are ready for the next tick.
 			cancelledTasks.clear();
 			currentTasks.clear();
 			try {

@@ -2,6 +2,7 @@ package de.spacepotato.sagittarius.scheduler;
 
 import java.util.concurrent.ExecutorService;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -10,7 +11,8 @@ public class SagittariusScheduledTask implements ScheduledTask {
 	private final Runnable runnable;
 	private final long period;
 	private boolean cancel;
-	private boolean sync;
+	@Getter
+	private final boolean sync;
 	private long nextExecutionTick;
 	
 	public SagittariusScheduledTask(Runnable runnable, boolean sync, long period, long nextExecutionTick) {
@@ -44,11 +46,7 @@ public class SagittariusScheduledTask implements ScheduledTask {
 	public boolean isRepeating() {
 		return period != -1;
 	}
-	
-	public boolean isSync() {
-		return sync;
-	}
-	
+
 	public boolean isReady(long tick) {
 		return nextExecutionTick <= tick;
 	}

@@ -5,17 +5,17 @@ import java.util.List;
 import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.entity.Player;
 import de.spacepotato.sagittarius.scheduler.Scheduler;
+import lombok.Getter;
 
 public abstract class Sagittarius {
 
+	@Getter
 	protected static Sagittarius instance;
-	
-	public static Sagittarius getInstance() {
-		return instance;
-	}
-	
+
 	public static void setInstance(Sagittarius instance) {
-		if (Sagittarius.instance != null) throw new RuntimeException("Instance is already set!");
+		if (Sagittarius.instance != null) {
+			throw new RuntimeException("Instance is already set!");
+		}
 		Sagittarius.instance = instance;
 	}
 	
@@ -40,7 +40,6 @@ public abstract class Sagittarius {
 	 * @return The instance to the current configuration.
 	 */
 	public abstract LimboConfig getConfig();
-	
 	
 	/**
 	 * Returns a list of all logged-in players.

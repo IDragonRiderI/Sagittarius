@@ -29,12 +29,12 @@ public class PacketReader extends ByteToMessageDecoder {
 	}
 	
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		childHandler.handleError(cause);
 	}
 	
 	@Override
-	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+	public void channelUnregistered(ChannelHandlerContext ctx) {
 		childHandler.handleDisconnect();
 	}
 

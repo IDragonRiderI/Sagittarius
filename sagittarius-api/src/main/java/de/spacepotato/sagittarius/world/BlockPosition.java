@@ -4,8 +4,8 @@ public class BlockPosition {
 	
 	// The long version of a block position is encoded as follows:
 	// The x coordinate takes up the first 26 bits, then 26 bits are dedicated to the z coordinate.
-	// All of the other bits belong to the y coordinate.
-	// Therefore we do not need to shift the y coordinate at all.
+	// All the other bits belong to the y coordinate.
+	// Therefore, we do not need to shift the y coordinate at all.
 	// However, we do need to shift the z coordinate 12 bits to the left as the y coordinate occupies 12 bits.
 	// The same goes for x: y occupies 12 bits and z occupies 26 bits, resulting in a 38 bit shift.
 	private static final int SHIFT_Y = 26;
@@ -30,9 +30,8 @@ public class BlockPosition {
 		long xCapped = x & CAP_X;
 		long zCapped = z & CAP_Z;
 		long yCapped = y & CAP_Y;
-		
-		long encoded = (xCapped << SHIFT_X) | (zCapped << SHIFT_Z) | (yCapped << SHIFT_Y);
-		return encoded;
+
+		return (xCapped << SHIFT_X) | (zCapped << SHIFT_Z) | (yCapped << SHIFT_Y);
 	}
 	
 	public static BlockPosition fromLong(long encoded) {
