@@ -21,7 +21,7 @@ public interface Chunk {
 	 * @param y The relative (chunk-based) y coordinate of the block.
 	 * @param z The relative (chunk-based) z coordinate of the block.
 	 * @param typeId The new type id for the block.
-	 * @param data Any additional data, if present. Otherwise 0.
+	 * @param data Any additional data, if present. Otherwise, 0.
 	 */
 	void set(int x, int y, int z, int typeId, byte data);
 	

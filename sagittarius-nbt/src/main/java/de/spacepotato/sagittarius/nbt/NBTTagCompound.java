@@ -20,7 +20,7 @@ public class NBTTagCompound extends NBT {
 	}
 	
 	public void read(NBTInputStream in) throws Exception {
-		byte type = 0;
+		byte type;
 		while((type = in.readByte()) != 0) {
 			String name = in.readUTF();
 			NBT nbt = NBTIDs.values()[type].newInstance();

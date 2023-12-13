@@ -142,7 +142,7 @@ public interface LimboConfig {
 	
 	/**
 	 * This value defines the amount of ticks that must pass before a player can be considered "moving".
-	 * If the spawn point is placed mid-air this might prevent the player from being connected while falling.
+	 * If the spawn point is placed midair this might prevent the player from being connected while falling.
 	 * @return The amount of ticks before players may be sent to the lobby.
 	 */
 	long getCheckDelayAfterJoin();

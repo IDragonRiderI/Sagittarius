@@ -49,7 +49,7 @@ delayBetweenAttempts = 5000
 # In that case it will read the raw bytes of the file and interpret it as the plugin message on startup.
 connectType = "string"
 # This is the data sent to BungeeCord. 
-# All of the strings in here are UTF-8 encoded and stored as array.
+# All the strings in here are UTF-8 encoded and stored as array.
 connectPayloadString = ["Connect", "lobby"]
 
 # Allows to define messages that will be sent to the player in regular intervals. Use \n for line breaks.
