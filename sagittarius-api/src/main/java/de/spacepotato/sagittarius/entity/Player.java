@@ -1,5 +1,6 @@
 package de.spacepotato.sagittarius.entity;
 
+import de.spacepotato.sagittarius.chat.ChatPosition;
 import de.spacepotato.sagittarius.mojang.SkinProperty;
 
 import java.util.Optional;
@@ -31,7 +32,17 @@ public interface Player extends Entity {
 	 * This method will not work if the player is still connecting.
 	 * @param message The message to send.
 	 */
-	void sendMessage(String message);
+	default void sendMessage(String message) {
+		sendMessage(message, ChatPosition.SYSTEM);
+	}
+	
+	/**
+	 * Sends a message to the player in the desired position.
+	 * This method will not work if the player is still connecting.
+	 * @param message The message that will be sent to the player.
+	 * @param position The position of the message.
+	 */
+	void sendMessage(String message, ChatPosition position);
 	
 	/**
 	 * Disconnects the player with the given message.

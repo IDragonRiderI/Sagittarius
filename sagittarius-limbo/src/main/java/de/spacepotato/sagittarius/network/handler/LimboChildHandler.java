@@ -81,7 +81,7 @@ public class LimboChildHandler extends ChildNetworkHandler {
 	public void handleHandshake(ClientHandshakePacket packet) {
 		// If the status is not login, then close the connection.
 		// TODO: handle status
-		if (packet.getNextState() != 2) {
+		if (packet.getNextState() != State.LOGIN.ordinal()) {
 			channel.close();
 			return;
 		}

@@ -1,6 +1,7 @@
 package de.spacepotato.sagittarius.entity;
 
 import de.spacepotato.sagittarius.chat.ChatComponent;
+import de.spacepotato.sagittarius.chat.ChatPosition;
 import de.spacepotato.sagittarius.mojang.GameProfile;
 import de.spacepotato.sagittarius.mojang.SkinProperty;
 import de.spacepotato.sagittarius.network.handler.LimboChildHandler;
@@ -38,8 +39,8 @@ public class PlayerImpl implements Player, PacketReceiver {
 	}
 
 	@Override
-	public void sendMessage(String message) {
-		ServerChatMessagePacket packet = new ServerChatMessagePacket(new ChatComponent(message).toJson(), (byte) 0);
+	public void sendMessage(String message, ChatPosition position) {
+		ServerChatMessagePacket packet = new ServerChatMessagePacket(new ChatComponent(message).toJson(), (byte) position.ordinal());
 		sendPacket(packet);
 	}
 
