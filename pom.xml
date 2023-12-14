@@ -59,6 +59,7 @@
 									<include>**</include>
 								</includes>
 							</artifactSet>
+							<finalName>Sagittarius</finalName>
 						</configuration>
 					</execution>
 				</executions>
