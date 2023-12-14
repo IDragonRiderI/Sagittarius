@@ -22,12 +22,14 @@ import de.spacepotato.sagittarius.network.protocol.status.ClientStatusRequestPac
 import de.spacepotato.sagittarius.util.PlayerMovementTracker;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+@Slf4j
 public class LimboChildHandler extends ChildNetworkHandler {
 
 	private PlayerImpl player;
@@ -65,6 +67,7 @@ public class LimboChildHandler extends ChildNetworkHandler {
 		synchronized (Sagittarius.getInstance().getPlayers()) {
 			Sagittarius.getInstance().getPlayers().remove(player);
 		}
+		log.info(player.getName() + " disconnected.");
 	}
 
 	// ============================================================ \\
@@ -155,6 +158,7 @@ public class LimboChildHandler extends ChildNetworkHandler {
 		if (config.shouldSendJoinMessage()) {
 			player.sendMessage(config.getJoinMessage());
 		}
+		log.info(player.getName() + " has logged in.");
 	}
 	
 	// ============================================================ \\
