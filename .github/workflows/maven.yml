@@ -20,8 +20,6 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
           cache: maven
-      - name: Run Build Script
-        run: sh scripts/build.sh --jar
       - name: Build with Maven
         run: mvn -B package --file pom.xml
       - name: Create Release
