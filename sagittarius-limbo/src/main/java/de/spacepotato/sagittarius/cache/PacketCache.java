@@ -2,6 +2,7 @@ package de.spacepotato.sagittarius.cache;
 
 import de.spacepotato.sagittarius.GameMode;
 import de.spacepotato.sagittarius.Sagittarius;
+import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.network.protocol.PacketContainer;
 import de.spacepotato.sagittarius.network.protocol.play.*;
 import de.spacepotato.sagittarius.world.BlockPosition;
@@ -18,6 +19,7 @@ public class PacketCache {
 	private PacketContainer positionAndLook;
 	private PacketContainer playerAbilities;
 	private PacketContainer connectPacket;
+	private PacketContainer[] respawnPackets;
 	
 	public void createPackets() {
 		createJoinGame();
@@ -25,6 +27,7 @@ public class PacketCache {
 		createPositionAndLook();
 		createPlayerAbilities();
 		createConnectPacket();
+		createRespawnPackets();
 	}
 	
 	private void createJoinGame() {
@@ -68,6 +71,22 @@ public class PacketCache {
 	
 	private void createConnectPacket() {
 		connectPacket = new PacketContainer(new ServerPluginMessagePacket("BungeeCord", Sagittarius.getInstance().getConfig().getConnectPayload()));
+	}
+	
+	private void createRespawnPackets() {
+		LimboConfig config = Sagittarius.getInstance().getConfig();
+		GameMode gameMode = config.getGameMode();
+		Dimension dimension = config.getDimension();
+		// We need to change the dimension first - then change it back to normal
+		Dimension temporaryDimension = dimension == Dimension.OVERWORLD ? Dimension.NETHER : Dimension.OVERWORLD;
+		Difficulty difficulty = config.getDifficulty();
+		String levelType = "default";
+		
+		
+		respawnPackets = new PacketContainer[2];
+		respawnPackets[0] = new PacketContainer(new ServerRespawnPacket(temporaryDimension.getId(), (byte) difficulty.ordinal(), (byte) gameMode.getId(), levelType));
+		respawnPackets[1] = new PacketContainer(new ServerRespawnPacket(dimension.getId(), (byte) difficulty.ordinal(), (byte) gameMode.getId(), levelType));
+		
 	}
 	
 }

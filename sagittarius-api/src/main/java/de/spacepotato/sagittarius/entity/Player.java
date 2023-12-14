@@ -51,6 +51,11 @@ public interface Player extends Entity {
 	void kick(String message);
 	
 	/**
+	 * This method will trigger the respawn sequence for the client.
+	 */
+	void respawn();
+	
+	/**
 	 * Returns whether the player is currently in the process of connecting to the server.
 	 * The result will become false as soon as the player enters the PLAY state.
 	 * @return true if the player is still connecting to the server.

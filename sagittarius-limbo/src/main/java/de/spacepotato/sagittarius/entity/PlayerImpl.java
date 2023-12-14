@@ -1,5 +1,6 @@
 package de.spacepotato.sagittarius.entity;
 
+import de.spacepotato.sagittarius.SagittariusImpl;
 import de.spacepotato.sagittarius.chat.ChatComponent;
 import de.spacepotato.sagittarius.chat.ChatPosition;
 import de.spacepotato.sagittarius.mojang.GameProfile;
@@ -48,6 +49,13 @@ public class PlayerImpl implements Player, PacketReceiver {
 	public void kick(String message) {
 		ServerDisconnectPacket packet = new ServerDisconnectPacket(new ChatComponent(message).toJson());
 		sendPacket(packet);
+	}
+	
+	@Override
+	public void respawn() {
+		for (PacketContainer container : SagittariusImpl.getInstance().getPacketCache().getRespawnPackets()) {
+			sendPacket(container);
+		}
 	}
 
 	@Override

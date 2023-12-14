@@ -151,6 +151,13 @@ public class SagittariusImpl extends Sagittarius {
 		if (getConfig().shouldSendActionbar()) {
 			actionbarTask = scheduler.repeat(this::tickActionbar, getConfig().getActionbarIntervalTicks(), getConfig().getActionbarIntervalTicks());			
 		}
+		
+		synchronized (players) {
+			for (Player player : players) {
+				player.respawn();
+				getWorldCache().send((PlayerImpl) player);
+			}
+		}
 	}
 	
 	private void shutdown() {
@@ -193,7 +200,7 @@ public class SagittariusImpl extends Sagittarius {
 		ChatComponent component = new ChatComponent(getConfig().getActionbarMessage());
 		ServerChatMessagePacket packet = new ServerChatMessagePacket(component.toJson(), (byte) 2);
 		PacketContainer container = new PacketContainer(packet);
-		synchronized (players) {			
+		synchronized (players) {
 			for (Player player : players) {
 				PlayerImpl impl = (PlayerImpl) player;
 				impl.sendPacket(container);
@@ -205,7 +212,7 @@ public class SagittariusImpl extends Sagittarius {
 		ChatComponent component = new ChatComponent(getConfig().getBroadcastMessage());
 		ServerChatMessagePacket packet = new ServerChatMessagePacket(component.toJson(), (byte) 0);
 		PacketContainer container = new PacketContainer(packet);
-		synchronized (players) {			
+		synchronized (players) {
 			for (Player player : players) {
 				PlayerImpl impl = (PlayerImpl) player;
 				impl.sendPacket(container);
