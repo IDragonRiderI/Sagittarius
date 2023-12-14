@@ -19,4 +19,9 @@ public class PacketHandler extends ChannelInboundHandlerAdapter {
 		packet.handle(childHandler);
 	}
 	
+	@Override
+	public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+		childHandler.handleDisconnect();
+	}
+	
 }

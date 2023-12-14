@@ -32,10 +32,5 @@ public class PacketReader extends ByteToMessageDecoder {
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		childHandler.handleError(cause);
 	}
-	
-	@Override
-	public void channelUnregistered(ChannelHandlerContext ctx) {
-		childHandler.handleDisconnect();
-	}
 
 }
