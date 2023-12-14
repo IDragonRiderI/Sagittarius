@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>de.spacepotato</groupId>
 		<artifactId>sagittarius-parent</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 	<artifactId>sagittarius-config</artifactId>
 	<dependencies>
@@ -20,12 +20,12 @@
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-log</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-api</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
 </project>
