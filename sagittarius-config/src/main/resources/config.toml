@@ -66,3 +66,13 @@ actionbarIntervalTicks = 20
 sendBroadcast = false
 broadcastMessage = "Move around to get teleported back!"
 broadcastIntervalTicks = 1200
+
+
+[border]
+centerX = 0
+centerZ = 0
+radius = 1000
+# Available colors: "GREEN", "BLUE" and "RED"
+color = "BLUE"
+warningTime = 0
+warningBlocks = 0

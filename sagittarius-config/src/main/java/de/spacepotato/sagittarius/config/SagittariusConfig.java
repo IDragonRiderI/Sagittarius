@@ -5,6 +5,7 @@ import de.spacepotato.sagittarius.world.Biome;
 import de.spacepotato.sagittarius.world.Difficulty;
 import de.spacepotato.sagittarius.world.Dimension;
 import de.spacepotato.sagittarius.world.Location;
+import de.spacepotato.sagittarius.world.WorldBorderColor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayOutputStream;
@@ -25,6 +26,7 @@ public class SagittariusConfig implements LimboConfig {
 	private Dimension dimension;
 	private double moveThresholdSquared;
 	private byte[] connectPayload;
+	private WorldBorderColor worldBorderColor;
 	
 	public SagittariusConfig() {
 		reload();
@@ -39,6 +41,7 @@ public class SagittariusConfig implements LimboConfig {
 		difficulty = Difficulty.valueOf(tomlConfig.getWorld().getDifficulty().toUpperCase());
 		dimension = Dimension.valueOf(tomlConfig.getWorld().getDimension().toUpperCase());
 		moveThresholdSquared = Math.pow(getMoveThreshold(), 2);
+		worldBorderColor = WorldBorderColor.valueOf(tomlConfig.getBorder().getColor().toUpperCase());
 		
 		if (tomlConfig.getConnect().getConnectType().equalsIgnoreCase("string")) {
 			try (ByteArrayOutputStream out = new ByteArrayOutputStream(); DataOutputStream dos = new DataOutputStream(out)) {
@@ -225,6 +228,36 @@ public class SagittariusConfig implements LimboConfig {
 	@Override
 	public int getBroadcastIntervalTicks() {
 		return tomlConfig.getMessages().getBroadcastIntervalTicks();
+	}
+
+	@Override
+	public double getWorldBorderCenterX() {
+		return tomlConfig.getBorder().getCenterX();
+	}
+
+	@Override
+	public double getWorldBorderCenterZ() {
+		return tomlConfig.getBorder().getCenterZ();
+	}
+
+	@Override
+	public double getWorldBorderRadius() {
+		return tomlConfig.getBorder().getRadius();
+	}
+
+	@Override
+	public WorldBorderColor getWorldBorderColor() {
+		return worldBorderColor;
+	}
+
+	@Override
+	public int getWorldBorderWarningTime() {
+		return tomlConfig.getBorder().getWarningTime();
+	}
+
+	@Override
+	public int getWorldBorderWarningBlocks() {
+		return tomlConfig.getBorder().getWarningBlocks();
 	}
 
 }

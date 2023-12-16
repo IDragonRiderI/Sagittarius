@@ -5,6 +5,7 @@ import de.spacepotato.sagittarius.world.Biome;
 import de.spacepotato.sagittarius.world.Difficulty;
 import de.spacepotato.sagittarius.world.Dimension;
 import de.spacepotato.sagittarius.world.Location;
+import de.spacepotato.sagittarius.world.WorldBorderColor;
 
 import java.util.Optional;
 
@@ -213,5 +214,43 @@ public interface LimboConfig {
 	 * @return The amount of ticks between broadcasts.
 	 */
 	int getBroadcastIntervalTicks();
+	
+	/**
+	 * Returns the x position of the world border's center.
+	 * @return the world border's center x position.
+	 */
+	double getWorldBorderCenterX();	
+	
+	/**
+	 * Returns the z position of the world border's center.
+	 * @return the world border's center z position.
+	 */
+	double getWorldBorderCenterZ();
+	
+	/**
+	 * Returns the radius of the world border.
+	 * @return the world border's radius.
+	 */
+	double getWorldBorderRadius();	
+	
+	/**
+	 * Returns the color of the world border.
+	 * @return the world border's color.
+	 */
+	WorldBorderColor getWorldBorderColor();
+	
+	
+	/**
+	 * Returns the warning time of the world border.
+	 * @return the world border's warning time.
+	 */
+	int getWorldBorderWarningTime();
+
+	
+	/**
+	 * Returns the warning blocks of the world border.
+	 * @return the world border's warning blocks.
+	 */
+	int getWorldBorderWarningBlocks();
 	
 }

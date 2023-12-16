@@ -39,5 +39,6 @@ public class TomlConfigurationFile {
 	private WorldConfig world;
 	private ConnectConfig connect;
 	private MessagesConfig messages;
+	private WorldBorderConfig border;
 	
 }

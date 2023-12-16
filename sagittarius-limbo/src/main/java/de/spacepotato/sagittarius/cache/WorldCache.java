@@ -104,6 +104,7 @@ public class WorldCache {
 				player.sendPacket(container);
 			}
 			player.sendPacket(SagittariusImpl.getInstance().getPacketCache().getPositionAndLook());
+			player.sendPacket(SagittariusImpl.getInstance().getPacketCache().getWorldBorder());
 		});
 	}
 	

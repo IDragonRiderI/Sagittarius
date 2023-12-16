@@ -5,10 +5,12 @@ import de.spacepotato.sagittarius.Sagittarius;
 import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.network.protocol.PacketContainer;
 import de.spacepotato.sagittarius.network.protocol.play.*;
+import de.spacepotato.sagittarius.network.protocol.play.ServerWorldborderPacket.WorldBorderConfiguration;
 import de.spacepotato.sagittarius.world.BlockPosition;
 import de.spacepotato.sagittarius.world.Difficulty;
 import de.spacepotato.sagittarius.world.Dimension;
 import de.spacepotato.sagittarius.world.Location;
+import de.spacepotato.sagittarius.world.WorldBorderColor;
 import lombok.Getter;
 
 @Getter
@@ -20,6 +22,7 @@ public class PacketCache {
 	private PacketContainer playerAbilities;
 	private PacketContainer connectPacket;
 	private PacketContainer[] respawnPackets;
+	private PacketContainer worldBorder;
 	
 	public void createPackets() {
 		createJoinGame();
@@ -28,6 +31,7 @@ public class PacketCache {
 		createPlayerAbilities();
 		createConnectPacket();
 		createRespawnPackets();
+		createWorldBorderPacket();
 	}
 	
 	private void createJoinGame() {
@@ -86,7 +90,25 @@ public class PacketCache {
 		respawnPackets = new PacketContainer[2];
 		respawnPackets[0] = new PacketContainer(new ServerRespawnPacket(temporaryDimension.getId(), (byte) difficulty.ordinal(), (byte) gameMode.getId(), levelType));
 		respawnPackets[1] = new PacketContainer(new ServerRespawnPacket(dimension.getId(), (byte) difficulty.ordinal(), (byte) gameMode.getId(), levelType));
+	}
+	
+	private void createWorldBorderPacket() {
+		LimboConfig config = Sagittarius.getInstance().getConfig();
 		
+		double x = config.getWorldBorderCenterX();
+		double z = config.getWorldBorderCenterZ();
+		double radius = config.getWorldBorderRadius();
+		double newRadius = radius;
+		if (config.getWorldBorderColor() == WorldBorderColor.RED) {
+			newRadius -= 0.5D;			
+		} else if (config.getWorldBorderColor() == WorldBorderColor.GREEN) {
+			newRadius += 0.5D;
+		}
+		int warningTime = config.getWorldBorderWarningTime();
+		int warningBlocks = config.getWorldBorderWarningBlocks();
+		
+		ServerWorldborderPacket packet = new ServerWorldborderPacket(3, new WorldBorderConfiguration(x, z, radius, newRadius, Long.MAX_VALUE, 29999984, warningTime, warningBlocks));
+		worldBorder = new PacketContainer(packet);
 	}
 	
 }
