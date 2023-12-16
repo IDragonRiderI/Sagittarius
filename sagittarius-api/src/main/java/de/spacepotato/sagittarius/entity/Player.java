@@ -1,12 +1,13 @@
 package de.spacepotato.sagittarius.entity;
 
 import de.spacepotato.sagittarius.chat.ChatPosition;
+import de.spacepotato.sagittarius.command.CommandSender;
 import de.spacepotato.sagittarius.mojang.SkinProperty;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public interface Player extends Entity {
+public interface Player extends Entity, CommandSender {
 
 	/**
 	 * Returns the player's name.

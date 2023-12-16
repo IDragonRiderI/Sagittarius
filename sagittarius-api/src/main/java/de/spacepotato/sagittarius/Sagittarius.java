@@ -1,5 +1,6 @@
 package de.spacepotato.sagittarius;
 
+import de.spacepotato.sagittarius.command.CommandSender;
 import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.entity.Player;
 import de.spacepotato.sagittarius.scheduler.Scheduler;
@@ -58,4 +59,10 @@ public abstract class Sagittarius {
 	 * @return The version of the limbo server.
 	 */
 	public abstract String getVersion();
+	
+	/**
+	 * Returns the console command sender.
+	 * @return The CommandSender object which is used when the console executes commands.
+	 */
+	public abstract CommandSender getConsole();
 }

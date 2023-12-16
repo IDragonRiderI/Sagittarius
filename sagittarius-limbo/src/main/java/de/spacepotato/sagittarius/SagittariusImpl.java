@@ -3,6 +3,9 @@ package de.spacepotato.sagittarius;
 import de.spacepotato.sagittarius.cache.PacketCache;
 import de.spacepotato.sagittarius.cache.WorldCache;
 import de.spacepotato.sagittarius.chat.ChatComponent;
+import de.spacepotato.sagittarius.command.CommandSender;
+import de.spacepotato.sagittarius.command.ConsoleCommandHandler;
+import de.spacepotato.sagittarius.command.ConsoleCommandSender;
 import de.spacepotato.sagittarius.config.LimboConfig;
 import de.spacepotato.sagittarius.config.SagittariusConfig;
 import de.spacepotato.sagittarius.entity.Player;
@@ -40,6 +43,8 @@ public class SagittariusImpl extends Sagittarius {
 	private final Random random;
 	@Getter
 	private final WorldCache worldCache;
+	private final ConsoleCommandSender console;
+	private final ConsoleCommandHandler commandHandler;
 	
 	private ScheduledTask keepAliveTask;
 	private ScheduledTask actionbarTask;
@@ -53,13 +58,14 @@ public class SagittariusImpl extends Sagittarius {
 		config = new SagittariusConfig();
 		packetCache = new PacketCache();
 		worldCache = new WorldCache();
+		console = new ConsoleCommandSender();
 		scheduler = new SagittariusScheduler();
+		commandHandler = new ConsoleCommandHandler();
 		server = new SagittariusServerImpl(new LimboParentHandler());
 		random = new Random();
 		
 		// Start the actual server
 		load();
-		Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
 	}
 
 	@Override
@@ -80,6 +86,11 @@ public class SagittariusImpl extends Sagittarius {
 	@Override
 	public List<Player> getPlayers() {
 		return players;
+	}
+	
+	@Override
+	public CommandSender getConsole() {
+		return console;
 	}
 
 	// ============================================================ \\
@@ -102,37 +113,9 @@ public class SagittariusImpl extends Sagittarius {
 	//                                                              \\
 	// ============================================================ \\
 	
-	private void load() {
-		log.info("Starting " + getName() + " v." + getVersion() + "...");
-		
-		packetCache.createPackets();
-		worldCache.load();
-		
-		server.setHostAndPort(config.getHost(), config.getPort());
-		server.setNativeNetworking(config.shouldUseNativeNetworking());
-		server.setNettyThreads(config.getNettyThreads());
-		
-		SagittariusViaPlatform.init();
-		SagittariusViaPlatform.load();
-		SagittariusViaPlatform.finishStartup();
-
-		server.start();
-		
-		keepAliveTask = scheduler.repeat(this::tickKeepAlive, getConfig().getKeepAliveDelay(), getConfig().getKeepAliveDelay());
-		if (getConfig().shouldSendBroadcasts()) {
-			broadcastTask = scheduler.repeat(this::tickBroadcast, getConfig().getBroadcastIntervalTicks(), getConfig().getBroadcastIntervalTicks());
-		}
-		if (getConfig().shouldSendActionbar()) {
-			actionbarTask = scheduler.repeat(this::tickActionbar, getConfig().getActionbarIntervalTicks(), getConfig().getActionbarIntervalTicks());			
-		}
-		
-		scheduler.startProcessing();
-	}
-	
-	@SuppressWarnings("unused")
-	private void reload() {
+	public void reload() {
 		log.info("Reloading server...");
-		server.stop();
+		config.reload();
 	
 		packetCache.createPackets();
 		worldCache.load();
@@ -140,7 +123,7 @@ public class SagittariusImpl extends Sagittarius {
 		server.setHostAndPort(config.getHost(), config.getPort());
 		server.setNativeNetworking(config.shouldUseNativeNetworking());
 		server.setNettyThreads(config.getNettyThreads());
-
+		
 		keepAliveTask.cancel();
 		keepAliveTask = scheduler.repeat(this::tickKeepAlive, getConfig().getKeepAliveDelay(), getConfig().getKeepAliveDelay());
 	
@@ -162,15 +145,46 @@ public class SagittariusImpl extends Sagittarius {
 		}
 	}
 	
-	private void shutdown() {
+	public void shutdown() {
 		log.info("Shutdown sequence triggered!");
 		
 		log.info("Stopping scheduler...");
 		scheduler.stopProcessing();
 
+		commandHandler.stopCommandThread();
+		
 		log.info("Closing socket...");
 		getServer().stop();
 		SagittariusViaPlatform.destroy();
+		System.exit(0);
+	}
+	
+	private void load() {
+		log.info("Starting " + getName() + " v." + getVersion() + "...");
+		
+		packetCache.createPackets();
+		worldCache.load();
+		
+		server.setHostAndPort(config.getHost(), config.getPort());
+		server.setNativeNetworking(config.shouldUseNativeNetworking());
+		server.setNettyThreads(config.getNettyThreads());
+		
+		SagittariusViaPlatform.init();
+		SagittariusViaPlatform.load();
+		SagittariusViaPlatform.finishStartup();
+
+		server.start();
+		commandHandler.startCommandThread();
+		
+		keepAliveTask = scheduler.repeat(this::tickKeepAlive, getConfig().getKeepAliveDelay(), getConfig().getKeepAliveDelay());
+		if (getConfig().shouldSendBroadcasts()) {
+			broadcastTask = scheduler.repeat(this::tickBroadcast, getConfig().getBroadcastIntervalTicks(), getConfig().getBroadcastIntervalTicks());
+		}
+		if (getConfig().shouldSendActionbar()) {
+			actionbarTask = scheduler.repeat(this::tickActionbar, getConfig().getActionbarIntervalTicks(), getConfig().getActionbarIntervalTicks());			
+		}
+		
+		scheduler.startProcessing();
 	}
 	
 	private void tickKeepAlive() {

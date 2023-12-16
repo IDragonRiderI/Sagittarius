@@ -71,4 +71,8 @@ public class PlayerMovementTracker {
 		nextConnectionAttempt = System.currentTimeMillis() + Sagittarius.getInstance().getConfig().getCheckDelayBetweenAttempts();
 		player.sendPacket(SagittariusImpl.getInstance().getPacketCache().getConnectPacket());
 	}
+
+	public void reset() {
+		nextConnectionAttempt = System.currentTimeMillis() + Sagittarius.getInstance().getConfig().getCheckDelayAfterJoin();
+	}
 }

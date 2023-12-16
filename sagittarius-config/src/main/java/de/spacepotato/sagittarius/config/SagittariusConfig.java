@@ -30,7 +30,7 @@ public class SagittariusConfig implements LimboConfig {
 		reload();
 	}
 	
-	private void reload() {
+	public void reload() {
 		tomlConfig = TomlConfigurationFile.loadConfig();
 		spawnPoint = new Location(tomlConfig.getWorld().getSpawnX(), tomlConfig.getWorld().getSpawnY(), tomlConfig.getWorld().getSpawnZ(), tomlConfig.getWorld().getYaw(), tomlConfig.getWorld().getPitch());
 		gameMode = GameMode.getGameMode(tomlConfig.getPlayer().getGamemode());

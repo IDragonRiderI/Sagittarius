@@ -53,6 +53,7 @@ public class PlayerImpl implements Player, PacketReceiver {
 	
 	@Override
 	public void respawn() {
+		childHandler.getMovementTracker().reset();
 		for (PacketContainer container : SagittariusImpl.getInstance().getPacketCache().getRespawnPackets()) {
 			sendPacket(container);
 		}

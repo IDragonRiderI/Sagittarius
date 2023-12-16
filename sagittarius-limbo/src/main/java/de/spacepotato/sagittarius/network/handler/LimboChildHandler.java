@@ -22,6 +22,7 @@ import de.spacepotato.sagittarius.network.protocol.status.ClientStatusRequestPac
 import de.spacepotato.sagittarius.util.PlayerMovementTracker;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayDeque;
@@ -35,6 +36,7 @@ public class LimboChildHandler extends ChildNetworkHandler {
 	private PlayerImpl player;
 	private ClientHandshakePacket handshake;
 	private final Queue<Integer> keepAliveIds;
+	@Getter
 	private PlayerMovementTracker movementTracker;
 	
 	public LimboChildHandler(Channel channel) {
