@@ -81,6 +81,11 @@ public class SagittariusConfig implements LimboConfig {
 	public boolean shouldUseNativeNetworking() {
 		return tomlConfig.getNetwork().isNativeNetworking();
 	}
+	
+	@Override
+	public int getNettyThreads() {
+		return tomlConfig.getNetwork().getNettyThreads();
+	}
 
 	@Override
 	public Location getSpawnPoint() {

@@ -110,6 +110,7 @@ public class SagittariusImpl extends Sagittarius {
 		
 		server.setHostAndPort(config.getHost(), config.getPort());
 		server.setNativeNetworking(config.shouldUseNativeNetworking());
+		server.setNettyThreads(config.getNettyThreads());
 		
 		SagittariusViaPlatform.init();
 		SagittariusViaPlatform.load();
@@ -138,7 +139,8 @@ public class SagittariusImpl extends Sagittarius {
 		
 		server.setHostAndPort(config.getHost(), config.getPort());
 		server.setNativeNetworking(config.shouldUseNativeNetworking());
-		
+		server.setNettyThreads(config.getNettyThreads());
+
 		keepAliveTask.cancel();
 		keepAliveTask = scheduler.repeat(this::tickKeepAlive, getConfig().getKeepAliveDelay(), getConfig().getKeepAliveDelay());
 	

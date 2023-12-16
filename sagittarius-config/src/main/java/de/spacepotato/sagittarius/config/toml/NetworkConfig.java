@@ -9,5 +9,6 @@ public class NetworkConfig {
 	private int port;
 	private boolean nativeNetworking;
 	private boolean viaversion;
+	private int nettyThreads;
 	
 }

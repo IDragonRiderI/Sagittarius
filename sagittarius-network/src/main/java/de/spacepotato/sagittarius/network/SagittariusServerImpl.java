@@ -25,6 +25,8 @@ public class SagittariusServerImpl implements SagittariusServer {
 	private int port;
 	@Setter
 	private boolean nativeNetworking;
+	@Setter
+	private int nettyThreads;
 	@Getter
 	private Channel server;
 	private MultiVersionInjector injector;
@@ -44,7 +46,7 @@ public class SagittariusServerImpl implements SagittariusServer {
 		if (isRunning()) return;
 		boolean epoll = nativeNetworking && Epoll.isAvailable();
 		EventLoopGroup bossGroup = epoll ? new EpollEventLoopGroup(1) : new NioEventLoopGroup(1);
-		EventLoopGroup workerGroup = epoll ? new EpollEventLoopGroup() : new NioEventLoopGroup();
+		EventLoopGroup workerGroup = epoll ? new EpollEventLoopGroup(nettyThreads) : new NioEventLoopGroup(nettyThreads);
 		
 		try {
 			ServerBootstrap bootstrap = new ServerBootstrap()

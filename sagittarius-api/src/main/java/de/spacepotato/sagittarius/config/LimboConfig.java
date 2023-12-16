@@ -35,6 +35,12 @@ public interface LimboConfig {
 	boolean shouldUseNativeNetworking();
 	
 	/**
+	 * Returns the amount of threads that should be used by Netty.
+	 * @return the amount of threads that should be used by Netty or 0 if the maximum amount should be used.
+	 */
+	int getNettyThreads();
+	
+	/**
 	 * Returns the spawn point of the player in the current world.
 	 * @return The spawnpoint of the player.
 	 */
