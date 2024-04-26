@@ -15,11 +15,6 @@ public class SagittariusViaApi extends ViaAPIBase<Player> {
 	}
 
 	@Override
-	public ProtocolVersion getPlayerProtocolVersion(Player player) {
-		return ProtocolVersion.getProtocol(VersionType.RELEASE, getPlayerVersion(player));
-	}
-
-	@Override
 	public void sendRawPacket(Player player, ByteBuf packet) {
 		((PacketReceiver) player).sendPacket(packet);
 	}
