@@ -3,6 +3,7 @@ package de.spacepotato.sagittarius.viaversion.platform;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.platform.ViaInjector;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
 import com.viaversion.viaversion.libs.gson.JsonObject;
 import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
@@ -27,8 +28,8 @@ public class SagittariusViaInjector implements ViaInjector, MultiVersionInjector
 	}
 
 	@Override
-	public int getServerProtocolVersion() {
-		return 47;
+	public ProtocolVersion getServerProtocolVersion() {
+		return ProtocolVersion.v1_8;
 	}
 
 	@Override
