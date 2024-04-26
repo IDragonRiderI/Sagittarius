@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>com.viaversion</groupId>
 			<artifactId>viaversion</artifactId>
-			<version>4.9.2</version>
+			<version>4.10.0</version>
 		</dependency>
 		<!-- ViaVersion dependencies -->
 		<dependency>
