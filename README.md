@@ -1,10 +1,10 @@
 # Sagittarius - Standalone Minecraft Limbo
-Sagittarius is a small Minecraft Limbo project which aims to support any version starting from  1.8. This is accomplished by integrating ViaVersion into the server itself.
+Sagittarius is a small Minecraft Limbo project which aims to support any version starting from 1.8. This is accomplished by integrating ViaVersion into the server itself.
 The name is inspired by the black hole [Sagittarius A*](https://en.wikipedia.org/wiki/Sagittarius_A*) which is also a slight reference to how limbo servers in general work.
 
 ## Features
 - [x] WorldEdit Schematics
-- [x] Support for version 1.8 - 1.20.4 (ViaVersion)
+- [x] Support for version 1.8 - 1.20.6 (ViaVersion)
 - [x] Supports game modes (Creative, Spectator, ...)
 - [x] Supports BungeeCord IP-Forwarding (incl. Skins)
 - [x]  Actionbar support
