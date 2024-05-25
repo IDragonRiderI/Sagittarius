@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class SagittariusViaPlatform implements ViaPlatform<Player>{
 
 	private static final SagittariusViaPlatform INSTANCE = new SagittariusViaPlatform();
-	private static final String PLUGIN_VERSION = "4.9.2";
+	private static final String PLUGIN_VERSION = "4.10.2";
 
 	public static void init() {
 		if (!Sagittarius.getInstance().getConfig().shouldUseViaVersion()) return;
