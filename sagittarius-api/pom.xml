@@ -3,14 +3,14 @@
 	<parent>
 		<groupId>de.spacepotato</groupId>
 		<artifactId>sagittarius-parent</artifactId>
-		<version>1.1.0</version>
+		<version>1.1.1</version>
 	</parent>
 	<artifactId>sagittarius-api</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-chat</artifactId>
-			<version>1.1.0</version>
+			<version>1.1.1</version>
 		</dependency>
 	</dependencies>
 </project>
