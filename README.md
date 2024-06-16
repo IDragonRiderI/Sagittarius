@@ -1,17 +1,18 @@
 # Sagittarius - Standalone Minecraft Limbo
-Sagittarius is a small Minecraft Limbo project which aims to support any version starting from  1.8. This is accomplished by integrating ViaVersion into the server itself.
+Sagittarius is a small Minecraft Limbo project which aims to support any version starting from 1.8. This is accomplished by integrating ViaVersion into the server itself.
+Whilst this allows for quick version integration, it also binds us to a few restrictions set by ViaVersion. One of those restrictions is that *Java 17* is required in order to run Sagittarius.
 The name is inspired by the black hole [Sagittarius A*](https://en.wikipedia.org/wiki/Sagittarius_A*) which is also a slight reference to how limbo servers in general work.
 
 ## Features
 - [x] WorldEdit Schematics
-- [x] Support for version 1.8 - 1.20.4 (ViaVersion)
+- [x] Support for version 1.8 - 1.21 (ViaVersion)
 - [x] Supports game modes (Creative, Spectator, ...)
 - [x] Supports BungeeCord IP-Forwarding (incl. Skins)
-- [x]  Actionbar support
+- [x] Actionbar support
 - [x] The connection plugin message can be changed
 
-## Additional help  for modifying the code
-If the default version of Sagittarius does not fit your needs, you can modify the source code according to your needs. In this case you may find the wiki helpful as it contains more resources on that specific  topic.
+## Additional help for modifying the code
+If the default version of Sagittarius does not fit your needs, you can modify the source code according to your needs. In this case you may find the wiki helpful as it contains more resources on that specific topic.
 
 ## Using a WorldEdit schematic
 During the startup phase, Sagittarius will attempt to load a schematic called "world.schematic".
