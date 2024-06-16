@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>de.spacepotato</groupId>
 		<artifactId>sagittarius-parent</artifactId>
-		<version>1.1.1</version>
+		<version>1.1.2</version>
 	</parent>
 	<artifactId>sagittarius-viaversion</artifactId>
 	<repositories>
@@ -20,22 +20,22 @@
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-network</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-api</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-log</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.viaversion</groupId>
 			<artifactId>viaversion</artifactId>
-			<version>4.10.2</version>
+			<version>5.0.0</version>
 		</dependency>
 		<!-- ViaVersion dependencies -->
 		<dependency>

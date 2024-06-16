@@ -3,24 +3,24 @@
 	<parent>
 		<groupId>de.spacepotato</groupId>
 		<artifactId>sagittarius-parent</artifactId>
-		<version>1.1.1</version>
+		<version>1.1.2</version>
 	</parent>
 	<artifactId>sagittarius-limbo</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-api</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-log</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-network</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.carrotsearch</groupId>
@@ -30,22 +30,22 @@
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-config</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-chat</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-nbt</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>de.spacepotato</groupId>
 			<artifactId>sagittarius-viaversion</artifactId>
-			<version>1.1.1</version>
+			<version>1.1.2</version>
 		</dependency>
 	</dependencies>
 </project>

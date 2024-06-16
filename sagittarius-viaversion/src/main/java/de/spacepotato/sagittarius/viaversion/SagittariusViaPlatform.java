@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class SagittariusViaPlatform implements ViaPlatform<Player>{
 
 	private static final SagittariusViaPlatform INSTANCE = new SagittariusViaPlatform();
-	private static final String PLUGIN_VERSION = "4.10.2";
+	private static final String PLUGIN_VERSION = "5.0.0";
 
 	public static void init() {
 		if (!Sagittarius.getInstance().getConfig().shouldUseViaVersion()) return;
@@ -62,7 +62,7 @@ public class SagittariusViaPlatform implements ViaPlatform<Player>{
 		File configFile = new File(dataFolder, "via.yml");
 		
 		api = new SagittariusViaApi();
-		config = new SagittariusViaConfig(configFile);
+		config = new SagittariusViaConfig(configFile, logger);
 	}
 
 	@Override
