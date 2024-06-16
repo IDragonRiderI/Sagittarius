@@ -104,7 +104,7 @@ public class SagittariusImpl extends Sagittarius {
 	}
 	
 	public String getVersion() {
-		return "1.1.0";
+		return "1.1.2";
 	}
 	
 	// ============================================================ \\
